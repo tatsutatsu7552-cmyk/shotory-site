@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>shotory | PHOTO STUDIO &amp; CAFE</title>
+<meta name="description" content="shotory（ショトリー）は、自然体の写真を残すフォトスタジオと、ゆっくり過ごせる小さなカフェ。A MOMENT, A STORY. 一瞬が、一生の物語に。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Zen+Old+Mincho:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     SHOTORY — Design tokens
+     ============================================================ */
+  :root{
+    --ivory:      #F3ECDE;
+    --white-warm: #FAF5EB;
+    --sand:       #E6D7BE;
+    --greige:     #C9B392;
+    --brown:      #4A3B2C;
+    --brown-soft: #6E5A46;
+    --brown-deep: #2A2015;
+    --green:      #A9825C;
+    --green-deep: #7C5A3B;
+    --line:       rgba(42,32,21,0.14);
+
+    --serif-en: 'Cormorant Garamond', serif;
+    --serif-jp: 'Zen Old Mincho', serif;
+    --sans-jp:  'Zen Kaku Gothic New', sans-serif;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --container: 1180px;
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--brown);
+    font-family:var(--sans-jp);
+    font-weight:300;
+    line-height:1.9;
+    letter-spacing:0.02em;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  ::selection{ background:var(--green); color:var(--white-warm); }
+
+  .wrap{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 24px;
+  }
+  @media(min-width:768px){ .wrap{ padding:0 48px; } }
+
+  /* ---------- Eyebrow / heading system ---------- */
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    justify-content:center;
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-size:0.95rem;
+    letter-spacing:0.28em;
+    color:var(--green-deep);
+    margin:0 0 18px;
+    text-transform:uppercase;
+  }
+  .eyebrow::before,
+  .eyebrow::after{
+    content:'';
+    width:7px;height:7px;
+    border:1px solid currentColor;
+    border-radius:50%;
+    flex:none;
+  }
+  .section-title{
+    font-family:var(--serif-jp);
+    font-weight:500;
+    font-size:clamp(1.5rem, 4vw, 2.35rem);
+    letter-spacing:0.06em;
+    text-align:center;
+    margin:0 0 8px;
+    color:var(--brown-deep);
+  }
+  .section-sub{
+    text-align:center;
+    font-family:var(--serif-en);
+    font-size:1rem;
+    letter-spacing:0.08em;
+    color:var(--brown-soft);
+    margin:0 0 56px;
+  }
+  .section-head{ margin-bottom:56px; }
+
+  section{ position:relative; padding:112px 0; }
+  section.tight{ padding:72px 0; }
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-zoom img, .reveal-zoom .ph-img{
+    transform:scale(1.08);
+    transition:transform 1.6s var(--ease);
+  }
+  .reveal-zoom.in img, .reveal-zoom.in .ph-img{ transform:scale(1); }
+
+  /* ---------- Placeholder image system ----------
+     Replace by editing the data-src paths below or
+     swapping the background-image URL directly. */
+  .ph-img{
+    width:100%; height:100%;
+    background-color:var(--sand);
+    background-image:
+      linear-gradient(135deg, rgba(42,32,21,0.06) 0%, rgba(42,32,21,0) 55%),
+      var(--ph-url);
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  header.nav{
+    position:fixed; top:0; left:0; right:0;
+    z-index:100;
+    padding:22px 0;
+    transition:background 0.5s var(--ease), padding 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  header.nav.scrolled{
+    background:rgba(246,241,231,0.92);
+    backdrop-filter:blur(10px);
+    padding:14px 0;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:var(--serif-en);
+    font-size:1.4rem;
+    letter-spacing:0.22em;
+    color:var(--brown-deep);
+    text-transform:uppercase;
+    display:flex; align-items:center;
+  }
+  .logo-img{ height:46px; width:auto; display:block; transition:height 0.4s var(--ease); }
+  header.nav.scrolled .logo-img{ height:38px; }
+  .nav-links{
+    display:none;
+    gap:34px;
+    font-family:var(--serif-en);
+    font-size:0.92rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+  }
+  .nav-links a{ position:relative; padding-bottom:4px; color:var(--brown); }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; height:1px; width:0;
+    background:var(--green-deep); transition:width 0.4s var(--ease);
+  }
+  .nav-links a:hover::after{ width:100%; }
+  @media(min-width:900px){ .nav-links{ display:flex; } }
+
+  .nav-toggle{
+    display:flex; flex-direction:column; gap:5px;
+    background:none; border:none; padding:8px; z-index:120;
+  }
+  @media(min-width:900px){ .nav-toggle{ display:none; } }
+  .nav-toggle span{
+    width:24px; height:1px; background:var(--brown-deep);
+    transition:transform 0.35s var(--ease), opacity 0.35s var(--ease);
+  }
+  .nav-toggle.open span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:110;
+    background:var(--ivory);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:26px;
+    transform:translateY(-100%);
+    transition:transform 0.5s var(--ease);
+  }
+  .mobile-menu.open{ transform:translateY(0); }
+  .mobile-menu a{
+    font-family:var(--serif-jp);
+    font-size:1.3rem;
+    letter-spacing:0.08em;
+    color:var(--brown-deep);
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{
+    position:relative;
+    height:100svh;
+    min-height:560px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero .ph-img{
+    position:absolute; inset:0;
+    animation:heroZoom 18s var(--ease) forwards;
+  }
+  @keyframes heroZoom{ from{ transform:scale(1);} to{ transform:scale(1.1);} }
+
+  .hero-slideshow{ position:absolute; inset:0; }
+  .hero-slide{
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+    opacity:0;
+    animation: heroFade 14s infinite, heroSlideZoom 14s infinite linear;
+  }
+  .hero-slide:nth-child(1){ animation-delay:0s, 0s; }
+  .hero-slide:nth-child(2){ animation-delay:3.5s, 3.5s; }
+  .hero-slide:nth-child(3){ animation-delay:7s, 7s; }
+  .hero-slide:nth-child(4){ animation-delay:10.5s, 10.5s; }
+  @keyframes heroFade{
+    0%{ opacity:0; }
+    3%{ opacity:1; }
+    23%{ opacity:1; }
+    27%{ opacity:0; }
+    100%{ opacity:0; }
+  }
+  @keyframes heroSlideZoom{
+    0%{ transform:scale(1); }
+    100%{ transform:scale(1.12); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-slide{ animation:none; opacity:0; }
+    .hero-slide:first-child{ opacity:1; }
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,15,10,0.18) 0%, rgba(20,15,10,0.22) 40%, rgba(20,15,10,0.68) 100%);
+    z-index:1;
+  }
+  .hero-content{
+    position:relative; z-index:2;
+    width:100%;
+    padding:0 24px 64px;
+    text-align:center;
+    color:var(--white-warm);
+    text-shadow:0 2px 16px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.3);
+  }
+  @media(min-width:768px){ .hero-content{ padding:0 48px 88px; } }
+  .hero-eyebrow{
+    font-family:var(--serif-en);
+    font-style:italic;
+    letter-spacing:0.32em;
+    font-size:0.85rem;
+    text-transform:uppercase;
+    opacity:0.92;
+    margin:0 0 20px;
+    animation:fadeUp 1.2s var(--ease) 0.3s both;
+  }
+  .hero-en{
+    font-family:var(--serif-en);
+    font-weight:300;
+    font-size:clamp(2.1rem, 7vw, 4.2rem);
+    letter-spacing:0.1em;
+    line-height:1.15;
+    margin:0 0 18px;
+    animation:fadeUp 1.2s var(--ease) 0.55s both;
+  }
+  .hero-jp{
+    font-family:var(--serif-jp);
+    font-size:clamp(1rem, 2.6vw, 1.35rem);
+    letter-spacing:0.22em;
+    margin:0 0 34px;
+    opacity:0.96;
+    animation:fadeUp 1.2s var(--ease) 0.8s both;
+  }
+  .hero-tag{
+    display:inline-flex; align-items:center; gap:16px;
+    font-family:var(--serif-en);
+    font-size:0.82rem;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    animation:fadeUp 1.2s var(--ease) 1.05s both;
+  }
+  .hero-tag span{ opacity:0.85; }
+  .hero-tag a{
+    opacity:0.95; color:inherit; text-decoration:none;
+    padding:8px 18px; border:1px solid rgba(250,245,235,0.65);
+    border-radius:999px; background:rgba(250,245,235,0.08);
+    backdrop-filter:blur(2px);
+    transition:opacity 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.15s var(--ease);
+  }
+  .hero-tag a:hover{ opacity:1; background:rgba(250,245,235,0.22); border-color:rgba(250,245,235,0.9); }
+  .hero-tag a:active{ transform:scale(0.95); }
+  .hero-tag .dot{ display:none; }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+
+  .scroll-cue{
+    position:absolute; left:50%; bottom:26px; z-index:2;
+    transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    color:var(--white-warm);
+    font-family:var(--serif-en);
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    opacity:0.85;
+  }
+  .scroll-cue .line{
+    width:1px; height:34px;
+    background:linear-gradient(to bottom, currentColor, transparent);
+    animation:scrollLine 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollLine{ 0%{ transform:scaleY(0); transform-origin:top;} 45%{ transform:scaleY(1); transform-origin:top;} 55%{ transform:scaleY(1); transform-origin:bottom;} 100%{ transform:scaleY(0); transform-origin:bottom;} }
+
+  /* ============================================================
+     ABOUT
+     ============================================================ */
+  .about-grid{
+    display:grid; gap:40px;
+    grid-template-columns:1fr;
+    align-items:center;
+  }
+  @media(min-width:860px){ .about-grid{ grid-template-columns:0.9fr 1.1fr; gap:72px; } }
+  .about-media{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .about-media::before{
+    content:'';
+    position:absolute; z-index:2;
+    top:-16px; left:-16px; right:16px; bottom:16px;
+    border:1px solid var(--greige);
+    pointer-events:none;
+  }
+  .about-text p{ margin:0 0 20px; color:var(--brown-soft); font-size:0.98rem; }
+  .about-text p:last-child{ margin-bottom:0; }
+  .about-text .lead{
+    font-family:var(--serif-jp);
+    font-size:1.2rem;
+    color:var(--brown-deep);
+    letter-spacing:0.04em;
+    line-height:2.1;
+  }
+
+  /* ============================================================
+     STORY
+     ============================================================ */
+  section.story{ background:var(--brown-deep); color:var(--white-warm); }
+  section.story .eyebrow{ color:var(--greige); justify-content:flex-start; }
+  section.story .section-title{ color:var(--white-warm); text-align:left; }
+  .story-block{
+    display:grid; gap:40px; grid-template-columns:1fr;
+    align-items:center;
+    margin-bottom:88px;
+  }
+  .story-block:last-child{ margin-bottom:0; }
+  @media(min-width:860px){
+    .story-block{ grid-template-columns:0.85fr 1.15fr; gap:72px; }
+    .story-block.reverse .story-media{ order:2; }
+    .story-block.reverse .story-text{ order:1; }
+  }
+  .story-media{ aspect-ratio:4/5; overflow:hidden; border-radius:2px; }
+  .story-text p{ margin:0 0 20px; color:var(--sand); font-size:0.95rem; line-height:2.05; }
+  .story-text p:last-child{ margin-bottom:0; }
+  .story-signature{
+    margin-top:28px !important;
+    padding-top:24px;
+    border-top:1px solid rgba(251,248,242,0.16);
+    font-family:var(--serif-en);
+    font-style:italic;
+    color:var(--white-warm) !important;
+    font-size:1rem !important;
+  }
+  .story-signature span{
+    display:block; font-family:var(--sans-jp); font-style:normal;
+    font-size:0.78rem; color:var(--greige); margin-top:4px; letter-spacing:0.04em;
+  }
+
+  /* ---------- News ---------- */
+  .news{ padding:60px 0; }
+  .news-list{ max-width:640px; margin:0 auto; }
+  .news-item{
+    display:flex; gap:24px; align-items:baseline;
+    padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .news-item:first-child{ border-top:1px solid var(--line); }
+  .news-date{
+    font-family:var(--serif-en); font-size:0.92rem; letter-spacing:0.06em;
+    color:var(--green-deep); white-space:nowrap; flex-shrink:0;
+  }
+  .news-tag{
+    display:inline-block; margin-left:8px;
+    font-family:var(--serif-en); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--green-deep); border:1px solid var(--green-deep); border-radius:999px;
+    padding:2px 9px; opacity:0.8; vertical-align:middle;
+  }
+  .news-text{ font-family:var(--serif-jp); font-size:0.92rem; color:var(--brown-soft); line-height:1.7; }
+  @media(max-width:520px){
+    .news-item{ flex-direction:column; gap:4px; }
+  }
+
+  section.founder{ background:var(--sand); }
+  section.founder .eyebrow{ justify-content:flex-start; }
+  section.founder .section-title{ text-align:left; }
+  section.founder .story-text p{ color:var(--brown-soft); }
+  section.founder .story-text .story-signature{
+    border-top:1px solid var(--line);
+    color:var(--brown) !important;
+  }
+  section.founder .story-signature span{ color:var(--green-deep); }
+  .founder-name rt{
+    font-size:0.55em; font-family:var(--sans-jp); font-weight:400;
+    color:var(--brown-soft); letter-spacing:0;
+  }
+  .founder-cta{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:30px;
+    background:var(--brown-deep); color:var(--white-warm) !important;
+    padding:14px 30px; border-radius:2px;
+    font-family:var(--serif-en); font-size:0.85rem; letter-spacing:0.14em; text-transform:uppercase;
+    transition:background 0.3s var(--ease);
+  }
+  .founder-cta:hover{ background:var(--green-deep); }
+
+  /* ============================================================
+     PHOTO STUDIO — shot cards
+     ============================================================ */
+  section.studio{ background:var(--white-warm); }
+  .shot-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:14px;
+  }
+  @media(min-width:640px){ .shot-grid{ grid-template-columns:repeat(3,1fr); gap:20px; } }
+  .shot-card{
+    position:relative;
+    aspect-ratio:3/4;
+    overflow:hidden;
+    border-radius:2px;
+  }
+  .shot-card .ph-img{ transition:transform 1.1s var(--ease); }
+  .shot-card:hover .ph-img{ transform:scale(1.08); }
+  .shot-card::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(42,32,21,0) 45%, rgba(42,32,21,0.55) 100%);
+  }
+  .shot-label{
+    position:absolute; left:14px; bottom:12px; z-index:2;
+    color:var(--white-warm);
+    font-family:var(--serif-en);
+    font-style:italic;
+    font-size:1.05rem;
+    letter-spacing:0.08em;
+  }
+
+  /* ============================================================
+     PHOTO PLAN — pricing
+     ============================================================ */
+  .plan-grid{
+    display:grid; gap:22px;
+    grid-template-columns:1fr;
+  }
+  @media(min-width:720px){ .plan-grid{ grid-template-columns:repeat(2,1fr); } }
+  .plan-card{
+    background:var(--white-warm);
+    border:1px solid var(--line);
+    padding:36px 30px;
+    position:relative;
+  }
+  .plan-card.featured{ border-color:var(--green); }
+  .plan-card.featured::before{
+    content:'RECOMMENDED';
+    position:absolute; top:0; right:0;
+    transform:translateY(-50%);
+    background:var(--green-deep);
+    color:var(--white-warm);
+    font-family:var(--serif-en);
+    font-size:0.62rem;
+    letter-spacing:0.18em;
+    padding:5px 12px;
+  }
+  .plan-name{
+    font-family:var(--serif-en);
+    letter-spacing:0.16em;
+    font-size:0.95rem;
+    color:var(--green-deep);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  .plan-price{
+    font-family:var(--serif-jp);
+    font-size:2rem;
+    color:var(--brown-deep);
+    margin:0 0 18px;
+  }
+  .plan-price small{ font-family:var(--sans-jp); font-size:0.95rem; font-weight:400; color:var(--brown-soft); }
+  .plan-meta{
+    display:flex; gap:22px;
+    font-size:0.86rem; color:var(--brown-soft);
+    margin:0 0 20px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .plan-tags{
+    display:flex; flex-wrap:wrap; gap:8px 10px;
+    list-style:none; margin:0; padding:0;
+  }
+  .plan-tags li{
+    font-size:0.82rem;
+    color:var(--brown-soft);
+    padding:5px 12px;
+    border:1px solid var(--line);
+    border-radius:20px;
+  }
+  .plan-note{ font-size:0.86rem; color:var(--brown-soft); margin-top:12px; }
+  .plan-footnote{
+    text-align:center; margin-top:40px;
+    font-size:0.85rem; color:var(--brown-soft);
+    line-height:2;
+  }
+
+  /* ============================================================
+     LOCATION PHOTO
+     ============================================================ */
+  section.location{
+    background:var(--brown-deep);
+    color:var(--white-warm);
+  }
+  .location-inner{
+    display:grid; gap:40px;
+    grid-template-columns:1fr;
+    align-items:center;
+  }
+  @media(min-width:860px){ .location-inner{ grid-template-columns:1.05fr 0.95fr; gap:64px; } }
+  section.location .eyebrow{ color:var(--greige); }
+  section.location .section-title{ color:var(--white-warm); text-align:left; }
+  .location-inner .lead-text{
+    font-family:var(--serif-jp);
+    font-size:1.15rem;
+    line-height:2.1;
+    color:var(--sand);
+    margin:0 0 26px;
+  }
+  .loc-tags{
+    display:flex; flex-wrap:wrap; gap:10px 14px;
+    list-style:none; margin:0 0 26px; padding:0;
+    font-family:var(--serif-en);
+    letter-spacing:0.08em;
+    font-size:0.95rem;
+    color:var(--white-warm);
+  }
+  .loc-tags li{ position:relative; padding-left:18px; }
+  .loc-tags li::before{
+    content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:7px; height:7px; border:1px solid var(--green);
+    border-radius:50%;
+  }
+  .loc-price{ font-size:0.9rem; color:var(--greige); line-height:1.9; }
+  .location-media{ aspect-ratio:4/5; overflow:hidden; }
+
+  /* ============================================================
+     CAFE
+     ============================================================ */
+  .cafe-grid{
+    display:grid; gap:40px; grid-template-columns:1fr; align-items:center;
+  }
+  @media(min-width:860px){ .cafe-grid{ grid-template-columns:1.1fr 0.9fr; gap:72px; } }
+  .cafe-media{ aspect-ratio:5/6; overflow:hidden; order:-1; }
+  @media(min-width:860px){ .cafe-media{ order:2; } }
+  .cafe-badges{
+    display:flex; gap:14px; margin-top:26px; flex-wrap:wrap;
+  }
+  .badge{
+    display:flex; align-items:center; gap:8px;
+    font-size:0.82rem; letter-spacing:0.04em; color:var(--green-deep);
+    border:1px solid var(--green); border-radius:20px;
+    padding:7px 16px;
+  }
+  .cafe-takeout{
+    display:flex; align-items:center; gap:16px;
+    margin-top:28px; padding-top:26px;
+    border-top:1px solid var(--line);
+  }
+  .cafe-takeout-media{
+    width:74px; height:74px; flex:none;
+    border-radius:50%; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .cafe-takeout-text{
+    font-size:0.86rem; color:var(--brown-soft); line-height:1.8; margin:0;
+  }
+
+  /* ============================================================
+     MENU
+     ============================================================ */
+  section.menu{ background:var(--white-warm); }
+  .menu-tabs{
+    display:flex; gap:8px; overflow-x:auto;
+    justify-content:center;
+    margin:0 0 44px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .menu-tabs::-webkit-scrollbar{ display:none; }
+  .menu-tab{
+    flex:none;
+    background:none; border:1px solid var(--line);
+    padding:9px 20px;
+    font-family:var(--serif-en);
+    letter-spacing:0.1em; font-size:0.85rem;
+    text-transform:uppercase;
+    color:var(--brown-soft);
+    border-radius:22px;
+    transition:all 0.35s var(--ease);
+  }
+  .menu-tab.active{ background:var(--brown-deep); color:var(--white-warm); border-color:var(--brown-deep); }
+
+  .menu-panel{ display:none; }
+  .menu-panel.active{ display:block; animation:fadeUp 0.6s var(--ease) both; }
+
+  .menu-block{ margin-bottom:40px; }
+  .menu-block:last-child{ margin-bottom:0; }
+  .menu-block-title{
+    font-family:var(--serif-jp);
+    font-size:1.05rem;
+    color:var(--green-deep);
+    letter-spacing:0.06em;
+    margin:0 0 18px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .menu-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:16px;
+    padding:12px 0;
+    border-bottom:1px dotted var(--line);
+  }
+  .menu-row:last-child{ border-bottom:none; }
+  .menu-row .name{ font-size:0.98rem; color:var(--brown); }
+  .menu-row .desc{ display:block; font-size:0.8rem; color:var(--brown-soft); margin-top:3px; }
+  .menu-row .price{
+    font-family:var(--serif-en); font-size:1rem; color:var(--brown-deep); flex:none;
+  }
+  .menu-hours{
+    font-size:0.85rem; color:var(--brown-soft);
+    margin:0 0 22px;
+    display:flex; gap:18px; flex-wrap:wrap;
+  }
+  .menu-note{
+    text-align:center; margin-top:8px;
+    font-size:0.85rem; color:var(--brown-soft);
+  }
+
+  /* ---------- Featured menu cards ---------- */
+  .feature-grid{
+    display:grid; gap:26px; grid-template-columns:1fr;
+  }
+  @media(min-width:720px){ .feature-grid{ grid-template-columns:repeat(3,1fr); } }
+  .feature-card{ position:relative; }
+  .feature-media{
+    aspect-ratio:1/1; overflow:hidden; border-radius:2px; margin-bottom:16px;
+  }
+  .feature-media img{ width:100%; height:100%; object-fit:cover; transition:transform 1s var(--ease); }
+  .feature-card:hover .feature-media img{ transform:scale(1.06); }
+  .feature-name{
+    font-family:var(--serif-jp); font-size:1.05rem; color:var(--brown-deep);
+    letter-spacing:0.03em; margin:0 0 10px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .feature-new{
+    font-family:var(--serif-en); font-size:0.65rem; letter-spacing:0.1em;
+    background:var(--green-deep); color:var(--white-warm);
+    padding:3px 9px; border-radius:12px; text-transform:uppercase;
+  }
+  .feature-desc{ font-size:0.86rem; color:var(--brown-soft); line-height:1.85; margin:0 0 14px; }
+  .feature-prices{ display:flex; flex-direction:column; gap:4px; font-size:0.86rem; color:var(--brown); }
+  .feature-tag{
+    display:inline-block; margin-top:10px;
+    font-size:0.72rem; letter-spacing:0.08em;
+    color:var(--green-deep); border:1px solid var(--green);
+    padding:4px 12px; border-radius:14px;
+  }
+
+  /* ============================================================
+     SPACE
+     ============================================================ */
+  .space-grid{
+    display:grid; gap:20px; grid-template-columns:1fr;
+  }
+  @media(min-width:640px){ .space-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1080px){ .space-grid{ grid-template-columns:repeat(4,1fr); } }
+  .space-card{ position:relative; }
+  .placeholder-media{
+    display:flex; align-items:center; justify-content:center;
+    background:var(--sand);
+  }
+  .coming-soon{
+    font-family:var(--serif-en); font-size:0.82rem; letter-spacing:0.14em;
+    color:var(--brown-soft); text-transform:uppercase;
+  }
+  .space-media{ aspect-ratio:4/5; overflow:hidden; margin-bottom:18px; }
+  .space-name{
+    font-family:var(--serif-en); font-style:italic;
+    font-size:1.15rem; color:var(--brown-deep);
+    margin:0 0 10px;
+  }
+  .space-tags{ list-style:none; padding:0; margin:0; font-size:0.86rem; color:var(--brown-soft); }
+  .space-tags li{ padding:3px 0; }
+
+  /* ============================================================
+     INFORMATION
+     ============================================================ */
+  section.info{ background:var(--sand); }
+  .info-grid{
+    display:grid; gap:0;
+    grid-template-columns:1fr;
+    background:var(--white-warm);
+    border:1px solid var(--line);
+  }
+  @media(min-width:720px){ .info-grid{ grid-template-columns:repeat(2,1fr); } }
+  .info-item{
+    padding:30px 32px;
+    border-bottom:1px solid var(--line);
+  }
+  @media(min-width:720px){
+    .info-item:nth-child(odd){ border-right:1px solid var(--line); }
+  }
+  .info-item:last-child, .info-item:nth-last-child(2):nth-child(odd){ border-bottom:none; }
+  .info-label{
+    font-family:var(--serif-en);
+    letter-spacing:0.14em;
+    font-size:0.82rem;
+    text-transform:uppercase;
+    color:var(--green-deep);
+    margin:0 0 12px;
+  }
+  .info-value{ font-size:0.95rem; color:var(--brown); line-height:1.9; margin:0; }
+  .info-value .small{ display:block; font-size:0.8rem; color:var(--brown-soft); margin-top:4px; }
+
+  /* ============================================================
+     ACCESS
+     ============================================================ */
+  .exterior-grid{
+    display:grid; gap:16px; grid-template-columns:1fr;
+    margin-bottom:36px;
+  }
+  @media(min-width:640px){ .exterior-grid{ grid-template-columns:1.4fr 1fr; } }
+  .exterior-media{ aspect-ratio:4/3; overflow:hidden; border-radius:2px; }
+  .exterior-media img{ width:100%; height:100%; object-fit:cover; transition:transform 1s var(--ease); }
+  .exterior-media:hover img{ transform:scale(1.05); }
+
+  .access-grid{
+    display:grid; gap:36px; grid-template-columns:1fr;
+  }
+  @media(min-width:860px){ .access-grid{ grid-template-columns:1fr 1fr; align-items:stretch; } }
+  .map-frame{
+    width:100%; height:340px;
+    border:1px solid var(--line);
+    background:var(--sand);
+    position:relative; overflow:hidden;
+  }
+  .map-frame iframe{ width:100%; height:100%; border:0; filter:grayscale(35%) sepia(8%); }
+  .access-details{ max-width:420px; width:100%; }
+  @media(min-width:860px){ .access-details{ display:flex; flex-direction:column; justify-content:center; } }
+  .access-details dl{ margin:0; }
+  .access-details dt{
+    font-family:var(--serif-en); letter-spacing:0.12em; font-size:0.8rem;
+    text-transform:uppercase; color:var(--green-deep);
+    margin:0 0 6px;
+  }
+  .access-details dd{
+    margin:0 0 26px; font-size:0.95rem; color:var(--brown); line-height:1.9;
+  }
+  .access-details dd:last-child{ margin-bottom:0; }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  section.contact{ background:var(--brown-deep); color:var(--white-warm); }
+  section.contact .eyebrow{ color:var(--greige); }
+  section.contact .section-title{ color:var(--white-warm); }
+  section.contact .section-sub{ color:var(--greige); }
+
+  .contact-intro{
+    max-width:560px; margin:0 auto 48px; text-align:center;
+    font-size:0.95rem; color:var(--sand); line-height:2;
+  }
+
+  .contact-buttons{
+    display:flex; flex-direction:column; gap:16px;
+    max-width:600px; margin:0 auto;
+  }
+  .contact-btn{
+    display:flex; align-items:center; gap:18px;
+    padding:22px 26px;
+    border:1px solid rgba(251,248,242,0.22);
+    background:rgba(251,248,242,0.03);
+    transition:all 0.35s var(--ease);
+  }
+  .contact-btn:hover{ background:rgba(251,248,242,0.08); border-color:var(--green); transform:translateY(-2px); }
+  .contact-btn .icon{ font-size:1.7rem; flex:none; line-height:1; }
+  .contact-btn .text{ flex:1; display:flex; flex-direction:column; gap:4px; }
+  .contact-btn .label{
+    font-family:var(--serif-en); letter-spacing:0.08em; font-size:1rem;
+    color:var(--white-warm);
+  }
+  .contact-btn .desc{ font-size:0.82rem; color:var(--greige); }
+  .contact-btn .arrow{ flex:none; color:var(--greige); font-family:var(--serif-en); opacity:0.7; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer.site-footer{
+    background:var(--brown-deep);
+    color:var(--greige);
+    padding:56px 0 28px;
+    border-top:1px solid rgba(251,248,242,0.1);
+    text-align:center;
+  }
+  .footer-logo-img{ height:96px; width:auto; margin:0 auto 14px; filter:brightness(0) invert(1); opacity:0.95; }
+  .footer-tagline{ font-size:0.82rem; letter-spacing:0.1em; margin:0 0 4px; }
+  .footer-tagline.jp{ font-family:var(--serif-jp); letter-spacing:0.08em; margin-bottom:28px; }
+  .footer-links{
+    display:flex; justify-content:center; gap:26px; margin-bottom:28px;
+    font-family:var(--serif-en); font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .footer-copy{ font-size:0.75rem; opacity:0.6; }
+
+  /* ---------- Utility: back to top ---------- */
+  .to-top{
+    position:fixed; right:20px; bottom:20px; z-index:80;
+    width:44px; height:44px; border-radius:50%;
+    background:var(--white-warm); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:all 0.4s var(--ease);
+  }
+  .to-top.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .to-top svg{ width:16px; height:16px; }
+
+  /* ---------- Sticky mobile CTA bar (conversion) ---------- */
+  .sticky-cta{
+    position:fixed; left:0; right:0; bottom:0; z-index:95;
+    display:flex;
+    background:rgba(250,245,235,0.97);
+    backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    box-shadow:0 -4px 20px rgba(42,32,21,0.08);
+    transform:translateY(0);
+    transition:transform 0.4s var(--ease);
+  }
+  .sticky-cta a{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 10px;
+    font-family:var(--serif-en); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase;
+    transition:transform 0.15s var(--ease), opacity 0.15s var(--ease), background 0.3s var(--ease);
+  }
+  .sticky-cta a:active{ transform:scale(0.95); opacity:0.85; }
+  .sticky-cta .icon{ font-size:0.95rem; line-height:1; }
+  .sticky-cta .cta-access{ color:var(--brown); border-right:1px solid var(--line); }
+  .sticky-cta .cta-book{
+    background:var(--brown-deep); color:var(--white-warm);
+    position:relative; overflow:hidden;
+    animation:ctaGlow 2.6s ease-in-out infinite;
+  }
+  @keyframes ctaGlow{
+    0%, 100%{ box-shadow:0 0 0 0 rgba(122,90,59,0); }
+    50%{ box-shadow:0 0 18px 2px rgba(199,166,120,0.45) inset, 0 -2px 14px 0 rgba(199,166,120,0.35); }
+  }
+  .sticky-cta.hide{ transform:translateY(100%); }
+  @media(min-width:900px){ .sticky-cta{ display:none; } }
+  body{ padding-bottom:0; }
+  @media(max-width:899px){ body{ padding-bottom:54px; } }
+
+  /* ---------- Floating Instagram round button ---------- */
+  .fab-ig{
+    position:fixed; right:16px; bottom:70px; z-index:96;
+    width:52px; height:52px; border-radius:50%;
+    background:var(--white-warm, #faf5eb);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(42,32,21,0.22);
+    transition:transform 0.4s var(--ease), opacity 0.4s var(--ease);
+  }
+  .fab-ig svg{ width:26px; height:26px; }
+  .fab-ig.hide{ transform:translateY(120%); opacity:0; }
+  @media(min-width:900px){ .fab-ig{ display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sticky-cta" id="stickyCta">
+  <a href="#access" class="cta-access"><span class="icon">📍</span>アクセスはコチラ</a>
+  <a href="#contact" class="cta-book"><span class="icon">🗓️</span>ご予約・お問い合わせ</a>
+</div>
+
+<a href="https://www.instagram.com/studio.shotory?igsh=OHNsOXQycnBkOGo%3D&utm_source=qr" target="_blank" rel="noopener" class="fab-ig" id="fabIg" aria-label="Instagram">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="20" height="20" rx="6" stroke="#2A2015" stroke-width="1.6"/>
+    <circle cx="12" cy="12" r="5" stroke="#2A2015" stroke-width="1.6"/>
+    <circle cx="17.5" cy="6.5" r="1.2" fill="#2A2015"/>
+  </svg>
+</a>
+
+<!-- ============================================================
+     CONFIG — edit these paths to swap in real photography.
+     Each key maps to the filename referenced in the brief.
+     ============================================================ -->
+<script>
+  window.SHOTORY_IMAGES = {
+    hero:      'images/hero.jpg',
+    about:     'images/about.jpg',
+    family:    'images/family.jpg',
+    kids:      'images/kids.jpg',
+    baby:      'images/baby.jpg',
+    shichigosan:'images/753.jpg',
+    pet:       'images/pet.jpg',
+    couple:    'images/couple.jpg',
+    location:  'images/location.jpg',
+    cafe:      'images/cafe.jpg',
+    studio01:  'images/studio01.jpg',
+    studio02:  'images/studio02.jpg',
+    cafeSpace: 'images/cafe-space.jpg'
+  };
+</script>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<header class="nav" id="siteNav">
+  <div class="wrap nav-inner">
+    <a href="#hero" class="logo"><img src="images/logo-mark.png" alt="shotory" class="logo-img"></a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#news">News</a>
+      <a href="#story">Story</a>
+      <a href="#studio">Studio</a>
+      <a href="#plan">Plan</a>
+      <a href="#cafe">Cafe</a>
+      <a href="#menu">Menu</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#news">News</a>
+  <a href="#story">Story</a>
+  <a href="#studio">Photo Studio</a>
+  <a href="#plan">Photo Plan</a>
+  <a href="#founder">Founder</a>
+  <a href="#location">Location Photo</a>
+  <a href="#cafe">Cafe</a>
+  <a href="#menu">Menu</a>
+  <a href="#space">Space</a>
+  <a href="#info">Information</a>
+</div>
+
+<!-- ============================================================
+     1. HERO
+     ============================================================ -->
+<section class="hero" id="hero">
+  <div class="hero-slideshow">
+    <div class="hero-slide" style="background-image:url('images/hero.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('images/hero-2.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('images/hero-3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('images/cafe.jpg')"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Moment, A Story.</p>
+    <h1 class="hero-en">shotory</h1>
+    <p class="hero-jp">一瞬が、一生の物語に。</p>
+    <div class="hero-tag"><a href="#studio">Photo Studio</a><span class="dot"></span><a href="#cafe">Cafe</a></div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ============================================================
+     2. ABOUT
+     ============================================================ -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-media reveal reveal-zoom">
+      <div class="ph-img" data-label="about.png" style="--ph-url:url('images/about.jpg')"></div>
+    </div>
+    <div class="about-text reveal">
+      <p class="eyebrow">About Shotory</p>
+      <h2 class="section-title" style="text-align:left;">一瞬が、一生の物語に。</h2>
+      <p class="lead">何気ない表情や、家族と過ごす時間。<br>あとから振り返れば、それは一生の宝物になります。</p>
+      <p>shotoryは、飾りすぎない自然な写真を残すフォトスタジオと、ゆっくり過ごせる小さなカフェです。</p>
+      <p>撮影の日だけでなく、カフェだけでも気軽に立ち寄れる場所を目指しています。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     NEWS
+     ============================================================ -->
+<section class="news" id="news">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">News</p>
+      <h2 class="section-title">NEWS</h2>
+    </div>
+    <div class="news-list reveal">
+      <div class="news-item">
+        <span class="news-date">2026.07.21<span class="news-tag">Shotory Cafe</span></span>
+        <span class="news-text">夏季限定「レモン日和の梅ソーダ」を発売しました。ぷるっとクラッシュ梅ゼリー入り。</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2026.07.15<span class="news-tag">Shotory Cafe</span></span>
+        <span class="news-text">オリジナルブレンド「ひだまりブレンド」「こもれびブレンド」が、新しい焙煎所との出会いでさらに香り豊かにリニューアルしました。</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2026.07.15<span class="news-tag">Shotory Cafe</span></span>
+        <span class="news-text">新メニュー「プレーンスコーン」が仲間入りしました。バターをたっぷり使った、外さくさく中しっとりの一品です。</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="story-block reveal">
+      <div class="story-media reveal-zoom">
+        <div class="ph-img" style="--ph-url:url('images/diy-renovation.jpg')"></div>
+      </div>
+      <div class="story-text">
+        <p class="eyebrow">Our Story</p>
+        <h2 class="section-title">祖父母から受け継いだ、この家で。</h2>
+        <p>長い間、祖父母が大切に暮らしてきた家。</p>
+        <p>その家を受け継ぎ、時間をかけて、フォトスタジオとカフェ「Shotory」へと生まれ変わらせました。</p>
+        <p>壁塗り、床貼り、什器づくりまで、その多くは業者に頼らずDIYで進めました。休みの日にコツコツと手を動かし、時には家族や友人にも手伝ってもらいながら、少しずつ形にしていった空間です。</p>
+        <p>古い家の面影を残しながら、壁や床を少しずつ整え、人が自然と集まれる場所へ。</p>
+        <p>新しくつくられたスタジオにはない、どこか懐かしく、肩の力を抜いて過ごせる空気があります。それは、一つひとつ手をかけてつくってきたからこそ生まれた空気だと思っています。</p>
+        <p>祖父母が見守ってきたこの家で、これからは、訪れる方々の新しい物語を紡いでいきます。</p>
+        <p class="story-signature">この家に流れてきた時間を、これからは皆さんと。<span>— 服部 竜也</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. PHOTO STUDIO
+     ============================================================ -->
+<section class="studio" id="studio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Photo Studio</p>
+      <h2 class="section-title">自然体のまま残す、今の姿。</h2>
+      <p class="section-sub">Family / Friends / Kids / Baby / 七五三 / Pet / Couple</p>
+    </div>
+    <div class="shot-grid">
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/family-shrine.jpg')"></div><span class="shot-label">Family</span></div>
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/friends.jpg')"></div><span class="shot-label">Friends</span></div>
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/kids-birthday.jpg')"></div><span class="shot-label">Kids</span></div>
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/baby-rings.jpg')"></div><span class="shot-label">Baby</span></div>
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/753-boy.jpg')"></div><span class="shot-label">753</span></div>
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/pet-dog.jpg')"></div><span class="shot-label">Pet</span></div>
+      <div class="shot-card reveal"><div class="ph-img" style="--ph-url:url('images/couple-book.jpg')"></div><span class="shot-label">Couple</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. PHOTO PLAN
+     ============================================================ -->
+<section id="plan">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Photo Plan</p>
+      <h2 class="section-title">プラン &amp; 料金</h2>
+    </div>
+
+    <div class="plan-grid">
+      <div class="plan-card featured reveal">
+        <p class="plan-name">Standard</p>
+        <p class="plan-price">¥25,000 <small>（税込）</small></p>
+        <div class="plan-meta"><span>50〜60分</span><span>約80cut</span></div>
+        <ul class="plan-tags">
+          <li>家族写真</li><li>お子さま</li><li>プロフィール</li><li>ペット</li><li>バースデー</li>
+        </ul>
+      </div>
+
+      <div class="plan-card reveal">
+        <p class="plan-name">Minimum</p>
+        <p class="plan-price">¥5,000 <small>（税込）</small></p>
+        <div class="plan-meta"><span>約10分</span><span>10cut</span></div>
+        <p class="plan-note">短時間でさっと残したい方向けのプランです。</p>
+      </div>
+
+      <div class="plan-card reveal">
+        <p class="plan-name">Location</p>
+        <p class="plan-price">¥35,000〜 <small>（税込）</small></p>
+        <div class="plan-meta"><span>約90分〜</span><span>約100cut〜</span></div>
+        <ul class="plan-tags">
+          <li>公園</li><li>海</li><li>街</li><li>神社</li><li>思い出の場所</li>
+        </ul>
+        <p class="plan-note">家族写真などの基本料金です。ウェディング／前撮り／長時間撮影／複数箇所撮影は内容によってお見積りとなります。</p>
+      </div>
+
+      <div class="plan-card reveal">
+        <p class="plan-name">ご近所のおうちフォト <span style="font-size:0.7rem; opacity:0.7;">— 横浜限定</span></p>
+        <p class="plan-price">¥28,000〜 <small>（税込）</small></p>
+        <div class="plan-meta"><span>約60分</span><span>約80cut</span></div>
+        <p class="plan-note">ご自宅や近所の公園など、日常を残すプラン。小さなお子さまにもおすすめです。</p>
+      </div>
+    </div>
+
+    <p class="plan-footnote">撮影内容や場所によって料金は変動します。<br>ウェディング撮影は別途お見積りとなります。</p>
+    <p class="plan-footnote">ヘアメイク・衣装レンタルは行っておりません。恐れ入りますが各自でご準備ください。（小物の貸し出しはございます）</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOUNDER — Behind Shotory
+     ============================================================ -->
+<section class="founder" id="founder">
+  <div class="wrap">
+    <div class="story-block reveal">
+      <div class="story-media reveal-zoom">
+        <div class="ph-img" style="--ph-url:url('images/founder-pointing.jpg')"></div>
+      </div>
+      <div class="story-text">
+        <p class="eyebrow">Behind Shotory</p>
+        <h2 class="section-title">その人らしい瞬間に、<br>そっと寄り添いたい。</h2>
+        <p>写真と映像の仕事を通して、たくさんの「大切な瞬間」に立ち会ってきました。</p>
+        <p>その度に感じたのは、写真や映像だけでなく、「そこで過ごした時間」そのものが、誰かの記憶になっていくということ。</p>
+        <p>祖父母から受け継いだこの家に、フォトスタジオとカフェを併設した Shotory をつくったのは、その時間ごと、大切な人に届けたいと思ったから。</p>
+        <p>特別な撮影の日も、ふらっとコーヒーを飲みに来る日も。ここに来てくれる誰もに、「来てよかった」と思ってもらえる場所でありたい。</p>
+        <p class="story-signature"><span>Shotory 代表／フォトグラファー<br>服部 竜也 Tatsuya Hattori</span></p>
+        <a href="#contact" class="founder-cta">ご予約・お問い合わせ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. LOCATION PHOTO
+     ============================================================ -->
+<section class="location" id="location">
+  <div class="wrap location-inner">
+    <div class="reveal">
+      <p class="eyebrow">Location Photo</p>
+      <h2 class="section-title">その場所の空気ごと、思い出に。</h2>
+      <p class="lead-text">スタジオだけではなく、公園・海・街・神社・ご自宅・思い出の場所などでも撮影しています。</p>
+      <ul class="loc-tags">
+        <li>公園</li><li>海</li><li>街</li><li>神社</li><li>ご自宅</li><li>思い出の場所</li>
+      </ul>
+      <p class="loc-price">家族写真は ¥35,000〜　／　ウェディングや前撮りは内容に応じてお見積りいたします。</p>
+    </div>
+    <div class="location-media reveal reveal-zoom">
+      <div class="ph-img" data-label="location.png" style="--ph-url:url('images/location.jpg')"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. CAFE
+     ============================================================ -->
+<section id="cafe">
+  <div class="wrap cafe-grid">
+    <div class="cafe-media reveal reveal-zoom">
+      <div class="ph-img" data-label="cafe.jpg" style="--ph-url:url('images/cafe.jpg')"></div>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow">Cafe</p>
+      <h2 class="section-title" style="text-align:left;">写真を撮らない日にも。</h2>
+      <p style="color:var(--brown-soft);">2階には小さなカフェがあります。自然光の入る空間で、一杯ずつ淹れるハンドドリップコーヒーと手作りスイーツをお楽しみください。</p>
+      <p style="color:var(--brown-soft);">カフェのみのご利用も大歓迎です。</p>
+      <div class="cafe-badges">
+        <span class="badge">☕ ハンドドリップ</span>
+        <span class="badge">🐾 1階・テラス わんちゃんOK</span>
+        <span class="badge">🥤 テイクアウトOK</span>
+      </div>
+      <div class="cafe-takeout">
+        <div class="cafe-takeout-media"><div class="ph-img" data-label="cafe-takeout.jpg" style="--ph-url:url('images/cafe-takeout.jpg')"></div></div>
+        <p class="cafe-takeout-text">お散歩のお供にも。<br>ドリンク・スコーンはテイクアウトも承っております。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     7. MENU
+     ============================================================ -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Menu</p>
+      <h2 class="section-title">MENU</h2>
+      <p class="section-sub" style="margin-bottom:8px;">shotory cafe</p>
+    </div>
+
+    <div class="menu-tabs reveal" role="tablist">
+      <button class="menu-tab active" data-tab="drink">Coffee &amp; Juice</button>
+      <button class="menu-tab" data-tab="milktea">Milk &amp; Tea</button>
+      <button class="menu-tab" data-tab="toast">Toast</button>
+      <button class="menu-tab" data-tab="featured">Featured</button>
+      <button class="menu-tab" data-tab="morning">Morning Set</button>
+      <button class="menu-tab" data-tab="lunch">Lunch Set</button>
+    </div>
+
+    <div class="reveal">
+      <div class="menu-panel active" id="panel-drink">
+        <div class="menu-block">
+          <p class="menu-block-title">Coffee <span style="font-weight:400; font-size:0.75rem; opacity:0.7;">— Shotory Original Blend</span></p>
+          <div class="menu-row"><span class="name">ひだまりブレンド<span class="desc">Hot / Ice ／ 浅煎り ／ やさしい香りの まろやかコーヒー</span></span><span class="price">¥450</span></div>
+          <div class="menu-row"><span class="name">こもれびブレンド<span class="desc">Hot / Ice ／ 深煎り ／ 深みのある ほろ苦さ</span></span><span class="price">¥450</span></div>
+        </div>
+        <div class="menu-block">
+          <p class="menu-block-title">Juice</p>
+          <div class="menu-row"><span class="name">オレンジのひざし<span class="desc">やさしく広がる さわやかな甘さ</span></span><span class="price">¥450</span></div>
+          <div class="menu-row"><span class="name">りんごのしずく<span class="desc">すっきり飲める りんごのひとしずく</span></span><span class="price">¥450</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-milktea">
+        <div class="menu-block">
+          <p class="menu-block-title">Milk / Tea</p>
+          <div class="menu-row"><span class="name">まろまろカフェラテ<span class="desc">Hot / Ice ／ ミルクで包む まろやかな味わい</span></span><span class="price">¥500</span></div>
+          <div class="menu-row"><span class="name">ふわふわミルクティー<span class="desc">Hot / Ice ／ ふんわり香る アッサム紅茶</span></span><span class="price">¥500</span></div>
+          <div class="menu-row"><span class="name">ほのかアールグレイ<span class="desc">Hot / Ice ／ すっきり広がる 紅茶の香り</span></span><span class="price">¥450</span></div>
+          <div class="menu-row"><span class="name">やさしいココア<span class="desc">Hot / Ice ／ ミルクたっぷり やさしい甘さ</span></span><span class="price">¥550</span></div>
+          <div class="menu-row"><span class="name">こっくりほうじ茶ラテ<span class="desc">Hot / Ice ／ 香ばしいほうじ茶の風味</span></span><span class="price">¥550</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-toast">
+        <div class="menu-block">
+          <p class="menu-block-title">Toast</p>
+          <div class="menu-row"><span class="name">あったかバター<span class="desc">バターの香りをまっすぐに</span></span><span class="price">¥350</span></div>
+          <div class="menu-row"><span class="name">さくさくシュガーバター<span class="desc">さくっとほどける 甘いひとくち</span></span><span class="price">¥400</span></div>
+          <div class="menu-row"><span class="name">かおるシナモンシュガー<span class="desc">香ばしいシナモンとほどける甘さ</span></span><span class="price">¥450</span></div>
+          <div class="menu-row"><span class="name">ぽかぽかあんバター<span class="desc">あたたかさがほっとする 定番の味</span></span><span class="price">¥500</span></div>
+          <div class="menu-row"><span class="name">こんがりベーコンチーズ<span class="desc">こんがり香る ベーコンとチーズにマヨのコク</span></span><span class="price">¥550</span></div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-featured">
+        <p class="menu-note" style="margin-top:0 0 28px;">shotory cafe のこだわりメニュー</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-media"><img src="images/menu-pudding.jpg" alt="こくまろプリン" loading="lazy"></div>
+            <p class="feature-name">こくまろプリン</p>
+            <p class="feature-desc">卵のコクとミルクのまろやかさ。ほろ苦いカラメルがとろける、やさしい味わいのプリンです。</p>
+            <div class="feature-prices">
+              <span>単品 ¥450（税込）</span>
+              <span>ドリンクセット（紅茶かコーヒー）¥700（税込）</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-media"><img src="images/menu-scone.jpg" alt="さくふわチョコスコーン" loading="lazy"></div>
+            <p class="feature-name">さくふわチョコスコーン</p>
+            <p class="feature-desc">外はさっくり、中はしっとり。たっぷりのチョコチップがうれしい、やさしい甘さのスコーンです。</p>
+            <div class="feature-prices">
+              <span>単品 ¥250（税込）</span>
+              <span>ドリンクセット（紅茶orコーヒー）¥500（税込）</span>
+            </div>
+            <span class="feature-tag">テイクアウト OK</span>
+          </div>
+          <div class="feature-card">
+            <div class="feature-media"><img src="images/menu-cheesecake.jpg" alt="木陰のチーズケーキ" loading="lazy"></div>
+            <p class="feature-name">木陰のチーズケーキ</p>
+            <p class="feature-desc">ロータスビスケットのやさしい甘さと、しっとりレアチーズが層になった一品。ラムレーズンの香りがアクセントです。</p>
+            <div class="feature-prices">
+              <span>単品 ¥550（税込）</span>
+              <span>ドリンクセット ¥800（税込）</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-panel" id="panel-morning">
+        <p class="menu-hours"><span>〜11:30まで</span><span>朝の時間だけの特別価格でご用意しています</span></p>
+        <div class="menu-block">
+          <div class="menu-row"><span class="name">A　バターセット<span class="desc">バターの香りをまっすぐに</span></span><span class="price">¥650</span></div>
+          <div class="menu-row"><span class="name">B　シュガーバターセット<span class="desc">さくっとほどける甘いひとくち</span></span><span class="price">¥700</span></div>
+          <div class="menu-row"><span class="name">C　シナモンシュガーセット<span class="desc">香ばしいシナモンとほどける甘さ</span></span><span class="price">¥750</span></div>
+          <div class="menu-row"><span class="name">D　あんバターセット<span class="desc">あたたかさがほっとするあじ</span></span><span class="price">¥800</span></div>
+          <div class="menu-row"><span class="name">E　ベーコンチーズセット<span class="desc">こんがり香るベーコンとチーズにマヨのコク</span></span><span class="price">¥850</span></div>
+        </div>
+        <p class="menu-note">えらべるサイド：サラダ（ごま／和風）or ヨーグルト（いちご／ブルーベリー）</p>
+        <p class="menu-note">えらべるドリンク：コーヒー（Hot/Ice）／ 紅茶（Hot/Ice）／ りんごジュース ／ オレンジジュース</p>
+      </div>
+
+      <div class="menu-panel" id="panel-lunch">
+        <p class="menu-hours"><span>11:30〜14:00</span><span>L.O 13:30</span></p>
+        <p class="menu-note" style="color:var(--green-deep);">※ ランチタイムは金・日限定の営業です</p>
+        <div class="menu-block">
+          <div class="menu-row"><span class="name">A　バターセット</span><span class="price">¥800</span></div>
+          <div class="menu-row"><span class="name">B　シュガーバターセット</span><span class="price">¥850</span></div>
+          <div class="menu-row"><span class="name">C　シナモンシュガーセット</span><span class="price">¥900</span></div>
+          <div class="menu-row"><span class="name">D　あんバターセット</span><span class="price">¥950</span></div>
+          <div class="menu-row"><span class="name">E　ベーコンチーズセット</span><span class="price">¥1,000</span></div>
+        </div>
+        <p class="menu-note">えらべるサイド：サラダ（ごま／和風）or ヨーグルト（いちご／ブルーベリー）</p>
+        <p class="menu-note">えらべるドリンク：コーヒー（Hot/Ice）／ 紅茶（Hot/Ice）／ りんごジュース ／ オレンジジュース（ランチタイムは単品サイズのドリンクとともに）</p>
+        <p class="menu-note" style="margin-top:18px;">特別価格の追加オプション（デザートをセットに可能・日替わりでご用意）<br>チーズケーキ +¥400　／　プリン +¥350　／　スコーン +¥200</p>
+        <p class="menu-note">ゆったりとしたお昼の時間のメニューです</p>
+      </div>
+
+      <p class="menu-note" style="margin-top:36px;">※ 表示価格はすべて税込です　／　テイクアウトは一部商品のみ対応しております</p>
+      <p class="menu-note" style="font-family:var(--serif-jp); font-size:0.92rem; color:var(--green-deep); margin-top:18px;">こころにやさしい、森のひとやすみ。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8. SPACE
+     ============================================================ -->
+<section id="space">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Space</p>
+      <h2 class="section-title">SPACE</h2>
+    </div>
+    <div class="space-grid">
+      <div class="space-card reveal">
+        <div class="space-media"><div class="ph-img" style="--ph-url:url('images/studio02.jpg')"></div></div>
+        <p class="space-name">Studio 1</p>
+        <ul class="space-tags"><li>自然光</li><li>背景紙は5色＋ベージュ基調を多数ご用意</li><li>背景の変更が可能</li></ul>
+      </div>
+      <div class="space-card reveal">
+        <div class="space-media"><div class="ph-img" style="--ph-url:url('images/studio2.jpg')"></div></div>
+        <p class="space-name">Studio 2</p>
+        <ul class="space-tags"><li>自然光</li><li>コンクリート調</li><li>アートな雰囲気の空間</li></ul>
+      </div>
+      <div class="space-card reveal">
+        <div class="space-media"><div class="ph-img" style="--ph-url:url('images/studio01.jpg')"></div></div>
+        <p class="space-name">Terrace</p>
+        <ul class="space-tags"><li>自然光</li><li>ガーデン</li><li>くつろぎの庭</li></ul>
+      </div>
+      <div class="space-card reveal">
+        <div class="space-media"><div class="ph-img" style="--ph-url:url('images/cafe-space.jpg')"></div></div>
+        <p class="space-name">Cafe</p>
+        <ul class="space-tags"><li>木の家具</li><li>約20席</li><li>ゆっくり過ごせる空間</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     9. INFORMATION
+     ============================================================ -->
+<section class="info" id="info">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Information</p>
+      <h2 class="section-title">INFORMATION</h2>
+    </div>
+    <div class="info-grid reveal">
+      <div class="info-item">
+        <p class="info-label">Hours — Cafe</p>
+        <p class="info-value">火・水・土　7:30〜11:30（L.O 11:00）<span class="small">金・日　7:30〜14:00（L.O 13:30）</span></p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Hours — Photo Studio</p>
+        <p class="info-value">金・土・日　12:30〜19:00</p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Closed</p>
+        <p class="info-value">月曜・木曜<span class="small">撮影で臨時休業の場合あり。Instagramをご確認ください。</span></p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Pet</p>
+        <p class="info-value">1階一部スペース・テラス OK</p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Parking</p>
+        <p class="info-value">1台分ございます</p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Payment</p>
+        <p class="info-value">現金 / PayPay / 各種キャッシュレス決済</p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Contact</p>
+        <p class="info-value">お問い合わせ・ご予約はLINEより<span class="small">Instagramでは作例や雰囲気をご覧いただけます</span></p>
+      </div>
+      <div class="info-item">
+        <p class="info-label">Address</p>
+        <p class="info-value">〒244-0802<span class="small">神奈川県横浜市戸塚区平戸3-37-13</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10. ACCESS
+     ============================================================ -->
+<section id="access">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Access</p>
+      <h2 class="section-title">ACCESS</h2>
+    </div>
+
+    <div class="exterior-grid reveal">
+      <div class="exterior-media"><img src="images/exterior.jpg" alt="shotory 外観" loading="lazy"></div>
+      <div class="exterior-media"><img src="images/entrance.jpg" alt="shotory 入口" loading="lazy"></div>
+    </div>
+
+    <div class="access-grid reveal">
+      <div class="map-frame">
+        <iframe
+          src="https://maps.google.com/maps?q=%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E6%A8%AA%E6%B5%9C%E5%B8%82%E6%88%B8%E5%A1%9A%E5%8C%BA%E5%B9%B3%E6%88%B83-37-13&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="shotory map"></iframe>
+      </div>
+      <div class="access-details">
+        <dl>
+          <dt>Address</dt>
+          <dd>〒244-0802<span style="display:block;">神奈川県横浜市戸塚区平戸3-37-13</span></dd>
+          <dt>Parking</dt>
+          <dd>専用駐車場 1台分ございます</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     11. CONTACT
+     ============================================================ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Contact</p>
+      <h2 class="section-title">CONTACT</h2>
+      <p class="section-sub" style="color:var(--greige);">撮影のご相談・カフェへのお問い合わせ</p>
+    </div>
+
+    <p class="contact-intro reveal">ご予約・お問い合わせはLINEより承っております。<br>Instagramでは作例や雰囲気をご紹介していますので、あわせてぜひご覧ください。</p>
+
+    <div class="contact-buttons reveal">
+      <a href="https://www.instagram.com/studio.shotory?igsh=OHNsOXQycnBkOGo%3D&utm_source=qr" target="_blank" rel="noopener" class="contact-btn">
+        <span class="icon">📷</span>
+        <span class="text">
+          <span class="label">Instagram</span>
+          <span class="desc">最新情報や雰囲気はこちらから</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://lin.ee/P78KNGO" target="_blank" rel="noopener" class="contact-btn">
+        <span class="icon">🗓️</span>
+        <span class="text">
+          <span class="label">撮影のご予約（LINE）</span>
+          <span class="desc">空き状況の確認・撮影のご予約はこちら</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://lin.ee/9zUqJuU" target="_blank" rel="noopener" class="contact-btn">
+        <span class="icon">☕</span>
+        <span class="text">
+          <span class="label">カフェのお問い合わせ（LINE）</span>
+          <span class="desc">ご来店に関するご質問はこちら</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     12. FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <img src="images/logo-mark.png" alt="shotory" class="footer-logo-img">
+    <p class="footer-tagline">PHOTO STUDIO &amp; CAFE — A Moment, A Story.</p>
+    <p class="footer-tagline jp">一瞬が、一生の物語に。</p>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#plan">Plan</a>
+      <a href="#menu">Menu</a>
+      <a href="#access">Access</a>
+      <a href="https://www.instagram.com/studio.shotory?igsh=OHNsOXQycnBkOGo%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <p class="footer-copy">© 2026 shotory</p>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="ページ上部へ戻る">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  /* ---------- Nav scroll state ---------- */
+  var nav = document.getElementById('siteNav');
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    toTop.classList.toggle('show', y > 700);
+  }, { passive:true });
+
+  /* ---------- Mobile menu ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ---------- Back to top ---------- */
+  toTop.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  /* ---------- Sticky CTA: hide once contact form is in view ---------- */
+  var stickyCta = document.getElementById('stickyCta');
+  var fabIg = document.getElementById('fabIg');
+  var contactSection = document.getElementById('contact');
+  if(stickyCta && contactSection && 'IntersectionObserver' in window){
+    var ctaObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        stickyCta.classList.toggle('hide', entry.isIntersecting);
+        if(fabIg){ fabIg.classList.toggle('hide', entry.isIntersecting); }
+      });
+    }, { threshold:0.2 });
+    ctaObserver.observe(contactSection);
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.15, rootMargin:'0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- Menu tabs ---------- */
+  var tabs = document.querySelectorAll('.menu-tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ---------- Apply configured image paths (if provided) ---------- */
+  var map = window.SHOTORY_IMAGES || {};
+  var bind = {
+    'hero':'hero','about.jpg':'about'
+  };
+  document.querySelectorAll('.ph-img[data-label]').forEach(function(el){
+    var label = el.getAttribute('data-label').replace(/\.(jpg|png|jpeg)$/i, '');
+    var key = label === '753' ? 'shichigosan' : label;
+    if(map[key]){
+      el.style.setProperty('--ph-url', "url('" + map[key] + "')");
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
