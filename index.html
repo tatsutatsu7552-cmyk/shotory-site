@@ -340,6 +340,100 @@
   @keyframes scrollLine{ 0%{ transform:scaleY(0); transform-origin:top;} 45%{ transform:scaleY(1); transform-origin:top;} 55%{ transform:scaleY(1); transform-origin:bottom;} 100%{ transform:scaleY(0); transform-origin:bottom;} }
 
   /* ============================================================
+     CAFE PICK — first-scroll showcase
+     ============================================================ */
+  section.cafe-pick{
+    padding:88px 0 96px; overflow:hidden;
+    background:
+      radial-gradient(ellipse at 50% 55%, rgba(255,251,243,0.95) 0%, rgba(255,251,243,0) 62%),
+      var(--sand);
+  }
+  .pick-head{ text-align:center; margin-bottom:8px; }
+  .pick-lead{
+    font-family:var(--serif-jp); font-size:0.98rem; line-height:2.1;
+    color:var(--brown-soft); margin:14px 0 0; letter-spacing:0.06em;
+  }
+  .pick-stage{
+    position:relative; margin:24px -24px 0;
+    aspect-ratio:4/5;
+  }
+  .pick-item{
+    position:absolute; margin:0;
+    left:var(--x); top:var(--y); width:var(--w); z-index:var(--z,1);
+    opacity:0;
+  }
+  .pick-item img{
+    width:100%; height:auto; display:block;
+    transform:rotate(var(--r,0deg));
+    filter:drop-shadow(0 18px 20px rgba(42,32,21,0.26)) drop-shadow(0 4px 6px rgba(42,32,21,0.14));
+  }
+  .pick-stage.in .pick-item{ animation:pickIn 1s var(--ease) both; animation-delay:var(--d); }
+  @keyframes pickIn{
+    from{ opacity:0; transform:translateY(26px) scale(0.92); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+  .pick-tag{
+    position:absolute; left:50%; bottom:2%; transform:translateX(-50%);
+    display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+    background:rgba(250,245,235,0.94); backdrop-filter:blur(4px);
+    padding:4px 11px; border-radius:999px;
+    box-shadow:0 4px 12px rgba(42,32,21,0.14);
+    font-size:0.68rem; color:var(--brown-deep); letter-spacing:0.04em;
+  }
+  .pick-tag b{ font-family:var(--serif-jp); font-weight:500; }
+  .pick-tag span{ font-family:var(--serif-en); font-size:0.82rem; color:var(--green-deep); }
+  .pick-tag em{
+    font-style:normal; font-size:0.58rem; background:var(--green-deep); color:var(--white-warm);
+    padding:1px 7px; border-radius:8px;
+  }
+  .pc-only{ display:none; }
+
+  /* mobile positions (4:5 stage) */
+  .p-coffee  { --x:-4%;  --y:3%;  --w:36%; --z:7; --r:-6deg; }
+  .p-iced    { --x:66%;  --y:0%;  --w:36%; --z:7; --r:4deg; }
+  .p-sugar   { --x:20%;  --y:17%; --w:62%; --z:6; --r:-8deg; }
+  .p-bacon   { --x:-9%;  --y:50%; --w:52%; --z:4; --r:10deg; }
+  .p-anbutter{ --x:57%;  --y:51%; --w:50%; --z:4; --r:-12deg; }
+  .p-pudding { --x:33%;  --y:73%; --w:36%; --z:3; }
+  .p-pudding .pick-tag{ bottom:-4%; }
+  .p-bacon .pick-tag{ left:60%; }
+  .p-coffee .pick-tag{ left:64%; }
+
+  @media(min-width:860px){
+    section.cafe-pick{ padding:112px 0 120px; }
+    .pick-stage{ margin:32px auto 0; max-width:1100px; aspect-ratio:16/9; }
+    .pc-only{ display:block; }
+    .pick-tag{ font-size:0.78rem; padding:5px 14px; }
+    .p-bacon .pick-tag, .p-coffee .pick-tag{ left:50%; }
+    .p-coffee  { --x:3%;   --y:4%;  --w:17%; --z:5; }
+    .p-mocha   { --x:19%;  --y:-2%; --w:14%; --z:2; --r:8deg; }
+    .p-cinnamon{ --x:69%;  --y:-2%; --w:22%; --z:2; --r:14deg; }
+    .p-iced    { --x:88%;  --y:30%; --w:15%; --z:5; }
+    .p-sugar   { --x:35%;  --y:8%;  --w:31%; --z:3; }
+    .p-bacon   { --x:13%;  --y:34%; --w:27%; --z:4; --r:8deg; }
+    .p-anbutter{ --x:61%;  --y:38%; --w:26%; --z:4; --r:-10deg; }
+    .p-cheese  { --x:-1%;  --y:66%; --w:17%; --z:5; --r:-4deg; }
+    .p-pudding { --x:40%;  --y:66%; --w:18%; --z:6; }
+    .p-scone   { --x:84%;  --y:70%; --w:14%; --z:5; --r:6deg; }
+  }
+
+  .pick-chips{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:28px;
+  }
+  .pick-chips span{
+    font-size:0.78rem; color:var(--green-deep); letter-spacing:0.04em;
+    border:1px solid var(--green); border-radius:999px; padding:6px 14px;
+    background:rgba(250,245,235,0.6);
+  }
+  .pick-cta{
+    display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:8px;
+  }
+  .pick-link{
+    font-family:var(--serif-jp); font-size:0.88rem; color:var(--brown-soft);
+    border-bottom:1px solid var(--greige); padding-bottom:2px;
+  }
+
+  /* ============================================================
      ABOUT
      ============================================================ */
   .about-grid{
@@ -1057,6 +1151,38 @@
     <div class="hero-tag"><a href="#studio">Photo Studio</a><span class="dot"></span><a href="#cafe">Cafe</a></div>
   </div>
   <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ============================================================
+     CAFE PICK — first scroll showcase
+     ============================================================ -->
+<section class="cafe-pick" id="cafe-pick">
+  <div class="wrap">
+    <div class="pick-head reveal">
+      <p class="eyebrow">Shotory Cafe</p>
+      <h2 class="section-title">カフェだけでも、どうぞ。</h2>
+      <p class="pick-lead">一杯ずつ淹れるハンドドリップコーヒーと、<br>厚切りトースト、自家製スイーツ。<br>朝7:30から、ひらいています。</p>
+    </div>
+    <div class="pick-stage reveal">
+      <figure class="pick-item p-coffee" style="--d:0.00s"><img src="/cafe-coffee.webp" alt="ハンドドリップコーヒー" loading="lazy"><figcaption class="pick-tag"><b>ハンドドリップ</b><span>¥500</span></figcaption></figure>
+      <figure class="pick-item p-mocha pc-only" style="--d:0.08s"><img src="/cafe-mocha.webp" alt="カフェモカ" loading="lazy"><figcaption class="pick-tag"><b>カフェモカ</b><span>¥600</span></figcaption></figure>
+      <figure class="pick-item p-cinnamon pc-only" style="--d:0.16s"><img src="/toast-cinnamon.webp" alt="シナモンシュガートースト" loading="lazy"></figure>
+      <figure class="pick-item p-iced" style="--d:0.24s"><img src="/cafe-iced.webp" alt="アイスラテとアイスコーヒー" loading="lazy"><figcaption class="pick-tag"><b>テイクアウトOK</b></figcaption></figure>
+      <figure class="pick-item p-sugar" style="--d:0.32s"><img src="/toast-sugar.webp" alt="シュガーバタートースト" loading="lazy"><figcaption class="pick-tag"><em>人気No.1</em><b>シュガーバター</b><span>¥400</span></figcaption></figure>
+      <figure class="pick-item p-bacon" style="--d:0.40s"><img src="/toast-bacon.webp" alt="ベーコンチーズトースト" loading="lazy"><figcaption class="pick-tag"><b>ベーコンチーズ</b><span>¥550</span></figcaption></figure>
+      <figure class="pick-item p-anbutter" style="--d:0.48s"><img src="/toast-anbutter.webp" alt="あんバタートースト" loading="lazy"><figcaption class="pick-tag"><b>あんバター</b><span>¥500</span></figcaption></figure>
+      <figure class="pick-item p-cheese pc-only" style="--d:0.56s"><img src="/sweets-cheesecake.webp" alt="NYチーズケーキ" loading="lazy"></figure>
+      <figure class="pick-item p-pudding" style="--d:0.64s"><img src="/sweets-pudding.webp" alt="こくまろプリン" loading="lazy"><figcaption class="pick-tag"><b>こくまろプリン</b><span>¥450</span></figcaption></figure>
+      <figure class="pick-item p-scone pc-only" style="--d:0.72s"><img src="/sweets-scone.webp" alt="スコーン" loading="lazy"></figure>
+    </div>
+    <div class="pick-chips reveal">
+      <span>Morning 〜11:30</span><span>テイクアウトOK</span><span>1階・テラス わんちゃんOK</span>
+    </div>
+    <div class="pick-cta reveal">
+      <a href="#menu" class="founder-cta">メニューを見る</a>
+      <a href="https://cafelp-vktw.vercel.app/" target="_blank" rel="noopener" class="pick-link">カフェについて詳しく →</a>
+    </div>
+  </div>
 </section>
 
 <!-- ============================================================
