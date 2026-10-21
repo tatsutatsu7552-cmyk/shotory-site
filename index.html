@@ -715,6 +715,52 @@
     padding:4px 12px; border-radius:14px;
   }
 
+  /* ---------- Sweets (cut-out plates) ---------- */
+  .sweets-lead{
+    text-align:center; margin:0 0 40px;
+    font-family:var(--serif-jp); font-size:1.15rem; letter-spacing:0.12em; color:var(--brown-deep);
+  }
+  .sweets-lead span{
+    display:block; margin-top:6px;
+    font-family:var(--sans-jp); font-size:0.78rem; letter-spacing:0.06em; color:var(--brown-soft);
+  }
+  .sweets-grid{ display:grid; gap:56px; grid-template-columns:1fr; }
+  @media(min-width:720px){ .sweets-grid{ grid-template-columns:repeat(3,1fr); gap:32px; } }
+  .sweets-card{ text-align:center; }
+  .sweets-visual{
+    position:relative; height:250px; margin:0 auto 22px; max-width:320px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sweets-visual::before{
+    content:''; position:absolute; left:50%; top:54%; width:82%; aspect-ratio:1/1;
+    transform:translate(-50%,-50%); border-radius:50%;
+    background:radial-gradient(circle, rgba(255,250,240,0.95) 0%, rgba(255,250,240,0) 70%);
+  }
+  .sweets-visual img{
+    position:relative; width:84%; height:auto;
+    filter:drop-shadow(0 16px 18px rgba(42,32,21,0.22)) drop-shadow(0 4px 6px rgba(42,32,21,0.12));
+    transition:transform 0.8s var(--ease);
+  }
+  .sweets-card:hover .sweets-visual img{ transform:translateY(-6px) rotate(-2deg); }
+  .sweets-visual.duo img{ position:absolute; }
+  .sweets-visual.duo .back{ width:62%; right:0; top:4px; }
+  .sweets-visual.duo .front{ width:72%; left:0; bottom:6px; }
+  .sweets-card:hover .sweets-visual.duo .back{ transform:translateY(-4px) rotate(3deg); }
+  .sweets-name{
+    font-family:var(--serif-jp); font-size:1.2rem; letter-spacing:0.08em;
+    color:var(--brown-deep); margin:0 0 4px;
+  }
+  .sweets-sub{ font-size:0.8rem; color:var(--brown-soft); margin:0 0 12px; letter-spacing:0.04em; }
+  .sweets-price{
+    font-family:var(--serif-en); font-size:1.7rem; color:var(--brown-deep);
+    margin:0; line-height:1.3;
+  }
+  .sweets-price small{
+    font-family:var(--sans-jp); font-size:0.75rem; color:var(--brown-soft);
+    margin-right:8px; vertical-align:middle;
+  }
+  .sweets-set{ font-size:0.8rem; color:var(--green-deep); margin:2px 0 0; }
+
   /* ============================================================
      SPACE
      ============================================================ */
@@ -1291,38 +1337,39 @@
       </div>
 
       <div class="menu-panel" id="panel-featured">
-        <p class="menu-note" style="margin:0 0 28px;">自家製スイーツ ／ 日によってご用意する種類が異なります。</p>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="feature-media"><img src="/menu-cheesecake.jpg" alt="チーズケーキ" loading="lazy"></div>
-            <p class="feature-name">チーズケーキ</p>
-            <p class="feature-desc">NYチーズケーキ・レーズンサンド</p>
-            <div class="feature-prices">
-              <span>単品 ¥500（税込）</span>
-              <span>ドリンクセット（コーヒーまたは紅茶）¥750（税込）</span>
+        <p class="sweets-lead">自家製スイーツ<span>日によってご用意する種類が異なります</span></p>
+        <div class="sweets-grid">
+          <div class="sweets-card">
+            <div class="sweets-visual duo">
+              <img class="back" src="/sweets-raisin.webp" alt="レーズンサンド" loading="lazy">
+              <img class="front" src="/sweets-cheesecake.webp" alt="NYチーズケーキ" loading="lazy">
             </div>
+            <p class="sweets-name">チーズケーキ</p>
+            <p class="sweets-sub">NYチーズケーキ ／ レーズンサンド</p>
+            <p class="sweets-price"><small>単品</small>¥500</p>
+            <p class="sweets-set">ドリンクセット ¥750</p>
           </div>
-          <div class="feature-card">
-            <div class="feature-media"><img src="/menu-pudding.jpg" alt="こくまろプリン" loading="lazy"></div>
-            <p class="feature-name">こくまろプリン</p>
-            <p class="feature-desc">卵のコクとミルクのまろやかさ。ほろ苦いカラメルがとろける、やさしい味わいのプリンです。</p>
-            <div class="feature-prices">
-              <span>単品 ¥450（税込）</span>
-              <span>ドリンクセット（コーヒーまたは紅茶）¥700（税込）</span>
+          <div class="sweets-card">
+            <div class="sweets-visual">
+              <img src="/sweets-pudding.webp" alt="こくまろプリン" loading="lazy">
             </div>
+            <p class="sweets-name">こくまろプリン</p>
+            <p class="sweets-sub">卵のコクと、ほろ苦いカラメル</p>
+            <p class="sweets-price"><small>単品</small>¥450</p>
+            <p class="sweets-set">ドリンクセット ¥700</p>
           </div>
-          <div class="feature-card">
-            <div class="feature-media"><img src="/menu-scone.jpg" alt="スコーン" loading="lazy"></div>
-            <p class="feature-name">スコーン</p>
-            <p class="feature-desc">バター・チョコ</p>
-            <div class="feature-prices">
-              <span>単品 ¥250（税込）</span>
-              <span>ドリンクセット（コーヒーまたは紅茶）¥500（税込）</span>
+          <div class="sweets-card">
+            <div class="sweets-visual">
+              <img src="/sweets-scone.webp" alt="スコーン" loading="lazy">
             </div>
+            <p class="sweets-name">スコーン</p>
+            <p class="sweets-sub">バター ／ チョコ</p>
+            <p class="sweets-price"><small>単品</small>¥250</p>
+            <p class="sweets-set">ドリンクセット ¥500</p>
             <span class="feature-tag">テイクアウト OK</span>
           </div>
         </div>
-        <p class="menu-note" style="margin-top:24px;">+¥250でコーヒーまたは紅茶をセットにできます（Hot / Ice）。</p>
+        <p class="menu-note" style="margin-top:36px;">ドリンクセットは +¥250 でコーヒーまたは紅茶（Hot / Ice）をおつけします。</p>
       </div>
 
       <div class="menu-panel" id="panel-morning">
