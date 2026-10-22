@@ -363,9 +363,8 @@
     opacity:0;
   }
   .pick-item img{
-    width:100%; height:auto; display:block;
+    width:124%; max-width:none; height:auto; display:block; margin:-12% 0 0 -12%;
     transform:rotate(var(--r,0deg));
-    filter:drop-shadow(0 18px 20px rgba(42,32,21,0.26)) drop-shadow(0 4px 6px rgba(42,32,21,0.14));
   }
   .pick-stage.in .pick-item{ animation:pickIn 1s var(--ease) both; animation-delay:var(--d); }
   @keyframes pickIn{
@@ -388,23 +387,30 @@
   }
   .pc-only{ display:none; }
 
-  /* mobile positions (4:5 stage) */
-  .p-coffee  { --x:-4%;  --y:3%;  --w:36%; --z:7; --r:-6deg; }
-  .p-iced    { --x:66%;  --y:0%;  --w:36%; --z:7; --r:4deg; }
-  .p-sugar   { --x:20%;  --y:17%; --w:62%; --z:6; --r:-8deg; }
-  .p-bacon   { --x:-9%;  --y:50%; --w:52%; --z:4; --r:10deg; }
-  .p-anbutter{ --x:57%;  --y:51%; --w:50%; --z:4; --r:-12deg; }
-  .p-pudding { --x:33%;  --y:73%; --w:36%; --z:3; }
-  .p-pudding .pick-tag{ bottom:-4%; }
-  .p-bacon .pick-tag{ left:60%; }
-  .p-coffee .pick-tag{ left:64%; }
+  /* mobile positions */
+  .pick-stage{ aspect-ratio:1/1.12; margin:28px -8px 0; }
+  .p-coffee  { --x:0%;   --y:1%;  --w:34%; --z:7; --r:-4deg; }
+  .p-iced    { --x:70%;  --y:-3%; --w:30%; --z:7; --r:3deg; }
+  .p-sugar   { --x:21%;  --y:12%; --w:58%; --z:6; --r:-6deg; }
+  .p-bacon   { --x:-2%;  --y:51%; --w:47%; --z:4; --r:8deg; }
+  .p-anbutter{ --x:55%;  --y:52%; --w:47%; --z:4; --r:-9deg; }
+  .p-pudding { --x:33%;  --y:72%; --w:34%; --z:3; }
+  .pick-tag{ font-size:0.62rem; padding:3px 10px; gap:5px; bottom:4%; }
+  .pick-tag span{ font-size:0.74rem; }
+  .p-coffee .pick-tag{ left:58%; bottom:10%; }
+  .p-iced .pick-tag{ left:46%; bottom:4%; }
+  .p-sugar .pick-tag{ bottom:6%; }
+  .p-bacon .pick-tag{ left:46%; bottom:8%; }
+  .p-anbutter .pick-tag{ left:54%; bottom:8%; }
+  .p-pudding .pick-tag{ bottom:-6%; }
 
   @media(min-width:860px){
     section.cafe-pick{ padding:112px 0 120px; }
     .pick-stage{ margin:32px auto 0; max-width:1100px; aspect-ratio:16/9; }
+    .pick-tag, .p-coffee .pick-tag, .p-iced .pick-tag, .p-sugar .pick-tag, .p-bacon .pick-tag, .p-anbutter .pick-tag{ left:50%; bottom:4%; }
+    .p-pudding .pick-tag{ bottom:-2%; }
     .pc-only{ display:block; }
     .pick-tag{ font-size:0.78rem; padding:5px 14px; }
-    .p-bacon .pick-tag, .p-coffee .pick-tag{ left:50%; }
     .p-coffee  { --x:3%;   --y:4%;  --w:17%; --z:5; }
     .p-mocha   { --x:19%;  --y:-2%; --w:14%; --z:2; --r:8deg; }
     .p-cinnamon{ --x:69%;  --y:-2%; --w:22%; --z:2; --r:14deg; }
@@ -419,12 +425,11 @@
 
   .pick-morning{
     display:grid; grid-template-columns:1fr; gap:6px; align-items:center;
-    margin:36px auto 0; max-width:1000px;
+    margin:64px auto 0; max-width:1000px;
   }
   .pm-visual{ margin:0 -10px; }
   .pm-visual img{
-    width:100%; height:auto; display:block; transform:rotate(-3deg);
-    filter:drop-shadow(0 22px 24px rgba(42,32,21,0.26)) drop-shadow(0 4px 8px rgba(42,32,21,0.12));
+    width:124%; max-width:none; height:auto; display:block; margin:-12% 0 -10% -12%; transform:rotate(-3deg);
   }
   .pm-text{ text-align:center; }
   .pm-label{
@@ -859,14 +864,13 @@
     background:radial-gradient(circle, rgba(255,250,240,0.95) 0%, rgba(255,250,240,0) 70%);
   }
   .sweets-visual img{
-    position:relative; width:84%; height:auto;
-    filter:drop-shadow(0 16px 18px rgba(42,32,21,0.22)) drop-shadow(0 4px 6px rgba(42,32,21,0.12));
+    position:relative; width:104%; max-width:none; height:auto;
     transition:transform 0.8s var(--ease);
   }
   .sweets-card:hover .sweets-visual img{ transform:translateY(-6px) rotate(-2deg); }
   .sweets-visual.duo img{ position:absolute; }
-  .sweets-visual.duo .back{ width:62%; right:0; top:4px; }
-  .sweets-visual.duo .front{ width:72%; left:0; bottom:6px; }
+  .sweets-visual.duo .back{ width:77%; right:-7%; top:-6%; }
+  .sweets-visual.duo .front{ width:89%; left:-9%; bottom:-8%; }
   .sweets-card:hover .sweets-visual.duo .back{ transform:translateY(-4px) rotate(3deg); }
   .sweets-name{
     font-family:var(--serif-jp); font-size:1.2rem; letter-spacing:0.08em;
