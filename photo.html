@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>shotory Photo Studio | 横浜の自然光フォトスタジオ</title>
+<meta name="description" content="横浜にある自然光のフォトスタジオ shotory。家族・子ども・夫婦・ペットの、その人らしさを自然に残す撮影を。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Zen+Old+Mincho:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F3ECDE; --white-warm:#FAF5EB; --sand:#E6D7BE; --greige:#C9B392;
+    --brown:#4A3B2C; --brown-soft:#6E5A46; --brown-deep:#2A2015;
+    --green:#A9825C; --green-deep:#7C5A3B; --line:rgba(42,32,21,0.14);
+    --serif-en:'Cormorant Garamond', serif; --serif-jp:'Zen Old Mincho', serif; --sans-jp:'Zen Kaku Gothic New', sans-serif;
+    --ease:cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--ivory); color:var(--brown);
+    font-family:var(--sans-jp); font-weight:300; line-height:1.9; letter-spacing:0.02em;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  @media(max-width:899px){ body{ padding-bottom:54px; } }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+  @media(min-width:768px){ .wrap{ padding:0 48px; } }
+  section{ padding:96px 0; }
+
+  .eyebrow{
+    display:flex; align-items:center; gap:14px; justify-content:center;
+    font-family:var(--serif-en); font-style:italic; font-size:0.95rem; letter-spacing:0.28em;
+    color:var(--green-deep); margin:0 0 18px; text-transform:uppercase;
+  }
+  .eyebrow::before,.eyebrow::after{ content:''; width:7px; height:7px; border:1px solid currentColor; border-radius:50%; }
+  .section-title{
+    font-family:var(--serif-jp); font-weight:500; font-size:clamp(1.5rem,4vw,2.3rem);
+    letter-spacing:0.06em; text-align:center; margin:0 0 10px; color:var(--brown-deep);
+  }
+  .section-sub{ text-align:center; font-size:0.9rem; color:var(--brown-soft); margin:0 0 48px; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* NAV */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100; padding:16px 0;
+    background:rgba(246,241,231,0.94); backdrop-filter:blur(10px); box-shadow:0 1px 0 var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .logo-img{ height:42px; width:auto; }
+  .nav-right{ display:flex; align-items:center; gap:18px; }
+  .nav-link{ font-family:var(--serif-en); font-size:0.88rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--brown); display:none; }
+  @media(min-width:760px){ .nav-link{ display:inline; } }
+  .nav-btn{
+    font-size:0.82rem; letter-spacing:0.1em; background:var(--brown-deep); color:var(--white-warm);
+    padding:9px 20px; border-radius:999px;
+  }
+
+  /* HERO */
+  .hero{ position:relative; height:100svh; min-height:560px; display:flex; align-items:flex-end; overflow:hidden; padding:0; }
+  .hero-slide{
+    position:absolute; inset:0; background-size:cover; background-position:center; opacity:0;
+    animation:heroFade 15s infinite, heroZoom 15s infinite linear;
+  }
+  .hero-slide:nth-child(1){ animation-delay:0s; }
+  .hero-slide:nth-child(2){ animation-delay:5s; }
+  .hero-slide:nth-child(3){ animation-delay:10s; }
+  @keyframes heroFade{ 0%{opacity:0} 4%{opacity:1} 33%{opacity:1} 38%{opacity:0} 100%{opacity:0} }
+  @keyframes heroZoom{ from{transform:scale(1)} to{transform:scale(1.1)} }
+  .hero::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,15,10,0.15) 0%, rgba(20,15,10,0.2) 45%, rgba(20,15,10,0.65) 100%); }
+  .hero-content{
+    position:relative; z-index:2; width:100%; padding:0 24px 72px; text-align:center;
+    color:var(--white-warm); text-shadow:0 2px 16px rgba(0,0,0,0.35);
+  }
+  .hero-eyebrow{ font-family:var(--serif-en); font-style:italic; letter-spacing:0.32em; font-size:0.85rem; text-transform:uppercase; margin:0 0 16px; }
+  .hero-en{ font-family:var(--serif-en); font-weight:300; font-size:clamp(2.4rem,8vw,4.4rem); letter-spacing:0.1em; line-height:1.1; margin:0 0 8px; }
+  .hero-studio{ font-family:var(--serif-en); letter-spacing:0.4em; font-size:0.85rem; text-transform:uppercase; margin:0 0 22px; opacity:0.9; }
+  .hero-jp{ font-family:var(--serif-jp); font-size:clamp(1rem,2.6vw,1.3rem); letter-spacing:0.22em; margin:0 0 30px; }
+  .hero-btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .pill{
+    display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:999px;
+    border:1px solid rgba(250,245,235,0.7); background:rgba(250,245,235,0.1); backdrop-filter:blur(2px);
+    font-family:var(--serif-en); letter-spacing:0.18em; font-size:0.85rem; text-transform:uppercase;
+  }
+  .pill svg{ width:16px; height:16px; }
+
+  /* CONCEPT */
+  .concept-grid{ display:grid; gap:40px; align-items:center; }
+  @media(min-width:860px){ .concept-grid{ grid-template-columns:0.9fr 1.1fr; gap:72px; } }
+  .concept-media{ aspect-ratio:4/5; overflow:hidden; border-radius:2px; }
+  .concept-media img{ width:100%; height:100%; object-fit:cover; }
+  .concept-text .section-title{ text-align:left; }
+  .concept-text .eyebrow{ justify-content:flex-start; }
+  .concept-text p{ color:var(--brown-soft); margin:0 0 18px; }
+
+  /* SCENES */
+  section.scenes{ background:var(--white-warm); }
+  .scene-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media(min-width:760px){ .scene-grid{ grid-template-columns:repeat(5,1fr); gap:18px; } }
+  .scene{ position:relative; aspect-ratio:3/4; overflow:hidden; border-radius:2px; }
+  .scene img{ width:100%; height:100%; object-fit:cover; transition:transform 1.1s var(--ease); }
+  .scene:hover img{ transform:scale(1.06); }
+  .scene::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(42,32,21,0) 50%, rgba(42,32,21,0.6) 100%); }
+  .scene span{
+    position:absolute; left:14px; bottom:12px; z-index:2; color:var(--white-warm);
+    font-family:var(--serif-jp); font-size:0.95rem; letter-spacing:0.08em; line-height:1.5;
+  }
+
+  /* PLAN */
+  .plan-grid{ display:grid; gap:22px; }
+  @media(min-width:720px){ .plan-grid{ grid-template-columns:repeat(2,1fr); } }
+  .plan-card{ background:var(--white-warm); border:1px solid var(--line); padding:34px 28px; position:relative; }
+  .plan-card.featured{ border-color:var(--green); }
+  .plan-card.featured::before{
+    content:'RECOMMENDED'; position:absolute; top:0; right:0; transform:translateY(-50%);
+    background:var(--green-deep); color:var(--white-warm); font-family:var(--serif-en); font-size:0.62rem; letter-spacing:0.18em; padding:5px 12px;
+  }
+  .plan-name{ font-family:var(--serif-en); letter-spacing:0.16em; font-size:0.95rem; color:var(--green-deep); text-transform:uppercase; margin:0 0 4px; }
+  .plan-price{ font-family:var(--serif-jp); font-size:2rem; color:var(--brown-deep); margin:0 0 10px; }
+  .plan-price small{ font-family:var(--sans-jp); font-size:0.9rem; color:var(--brown-soft); }
+  .plan-meta{ font-size:0.86rem; color:var(--green-deep); margin:0 0 14px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+  .plan-desc{ font-size:0.9rem; color:var(--brown-soft); margin:0; }
+  .plan-notes{ max-width:640px; margin:36px auto 0; font-size:0.84rem; color:var(--brown-soft); line-height:2; }
+
+  /* FEATURES */
+  section.features{ background:var(--sand); }
+  .feature-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media(min-width:860px){ .feature-grid{ grid-template-columns:repeat(4,1fr); gap:20px; } }
+  .feature{
+    background:var(--white-warm); border-radius:2px; padding:28px 16px; text-align:center;
+    font-family:var(--serif-jp); font-size:0.92rem; color:var(--brown-deep); line-height:1.9;
+  }
+  .feature b{ display:block; font-family:var(--serif-en); font-style:italic; font-weight:400; font-size:1.6rem; color:var(--green); margin-bottom:6px; }
+
+  /* FLOW */
+  .flow{ max-width:680px; margin:0 auto; display:grid; gap:0; }
+  .flow-step{ display:flex; gap:22px; padding:24px 0; border-bottom:1px solid var(--line); }
+  .flow-step:first-child{ border-top:1px solid var(--line); }
+  .flow-num{ font-family:var(--serif-en); font-size:2rem; color:var(--green); line-height:1; flex:none; width:44px; }
+  .flow-step h3{ font-family:var(--serif-jp); font-weight:500; font-size:1.05rem; color:var(--brown-deep); margin:0 0 4px; }
+  .flow-step p{ margin:0; font-size:0.88rem; color:var(--brown-soft); }
+
+  /* FAQ */
+  section.faq{ background:var(--white-warm); }
+  .faq-list{ max-width:720px; margin:0 auto; }
+  details{ border-bottom:1px solid var(--line); }
+  details:first-child{ border-top:1px solid var(--line); }
+  summary{
+    list-style:none; cursor:pointer; padding:20px 36px 20px 0; position:relative;
+    font-family:var(--serif-jp); font-size:0.98rem; color:var(--brown-deep);
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::before{ content:'Q.'; font-family:var(--serif-en); color:var(--green); margin-right:10px; font-size:1.1rem; }
+  summary::after{ content:'+'; position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:var(--serif-en); font-size:1.4rem; color:var(--green-deep); transition:transform 0.3s; }
+  details[open] summary::after{ transform:translateY(-50%) rotate(45deg); }
+  details p{ margin:0 0 20px; padding-left:28px; font-size:0.9rem; color:var(--brown-soft); }
+
+  /* RESERVATION */
+  section.reserve{ background:var(--brown-deep); color:var(--white-warm); text-align:center; }
+  section.reserve .eyebrow{ color:var(--greige); }
+  .reserve-title{ font-family:var(--serif-jp); font-weight:500; font-size:clamp(1.4rem,4vw,2rem); letter-spacing:0.08em; line-height:1.8; margin:0 0 18px; }
+  .reserve-text{ color:var(--sand); font-size:0.92rem; margin:0 0 40px; line-height:2.1; }
+  .reserve-btns{ display:flex; flex-direction:column; gap:14px; max-width:420px; margin:0 auto; }
+  .r-btn{
+    display:flex; align-items:center; justify-content:center; gap:10px; padding:17px 20px;
+    border:1px solid rgba(251,248,242,0.3); font-family:var(--serif-jp); letter-spacing:0.1em; font-size:0.95rem;
+    transition:background 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .r-btn:hover{ background:rgba(251,248,242,0.08); border-color:var(--green); }
+  .r-btn.primary{ background:var(--white-warm); color:var(--brown-deep); border-color:var(--white-warm); }
+  .r-btn svg{ width:20px; height:20px; }
+
+  /* FOOTER */
+  footer{ background:var(--brown-deep); color:var(--greige); text-align:center; padding:48px 0 32px; border-top:1px solid rgba(251,248,242,0.1); }
+  footer .f-logo{ font-family:var(--serif-en); font-size:1.8rem; letter-spacing:0.14em; color:var(--white-warm); margin:0; }
+  footer .f-sub{ font-family:var(--serif-en); letter-spacing:0.3em; text-transform:uppercase; font-size:0.75rem; margin:0 0 20px; }
+  footer p{ font-size:0.84rem; margin:0 0 6px; }
+  .f-links{ display:flex; justify-content:center; flex-wrap:wrap; gap:10px 22px; margin:22px 0 26px; font-family:var(--serif-en); letter-spacing:0.12em; text-transform:uppercase; font-size:0.8rem; }
+  .f-links a{ border-bottom:1px solid rgba(201,179,146,0.4); padding-bottom:2px; }
+  .f-copy{ font-size:0.72rem; opacity:0.6; }
+
+  /* STICKY / FAB */
+  .sticky-cta{
+    position:fixed; left:0; right:0; bottom:0; z-index:95; display:flex;
+    background:rgba(250,245,235,0.97); backdrop-filter:blur(10px); border-top:1px solid var(--line);
+    box-shadow:0 -4px 20px rgba(42,32,21,0.08); transition:transform 0.4s var(--ease);
+  }
+  .sticky-cta a{ flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:14px 10px; font-size:0.82rem; letter-spacing:0.08em; }
+  .sticky-cta .cta-access{ color:var(--brown); border-right:1px solid var(--line); font-family:var(--serif-en); text-transform:uppercase; }
+  .sticky-cta .cta-book{ background:var(--brown-deep); color:var(--white-warm); }
+  .sticky-cta svg{ width:16px; height:16px; }
+  .sticky-cta.hide{ transform:translateY(100%); }
+  @media(min-width:900px){ .sticky-cta{ display:none; } }
+  .fab-ig{
+    position:fixed; right:16px; bottom:70px; z-index:96; width:52px; height:52px; border-radius:50%;
+    background:var(--white-warm); display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(42,32,21,0.22); transition:transform 0.4s var(--ease), opacity 0.4s var(--ease);
+  }
+  .fab-ig svg{ width:26px; height:26px; }
+  .fab-ig.hide{ transform:translateY(120%); opacity:0; }
+  @media(min-width:900px){ .fab-ig{ bottom:24px; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="/" aria-label="shotory トップへ"><img src="/logo-mark.png" alt="shotory" class="logo-img"></a>
+    <div class="nav-right">
+      <a href="#plans" class="nav-link">Plan</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#access" class="nav-link">Access</a>
+      <a href="https://lin.ee/YKAl7Uc" target="_blank" rel="noopener" class="nav-btn">予約する</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-slide" style="background-image:url('/hero.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('/hero-2.jpg')"></div>
+  <div class="hero-slide" style="background-image:url('/hero-3.jpg')"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Moment, A Story.</p>
+    <h1 class="hero-en">shotory</h1>
+    <p class="hero-studio">Photo Studio</p>
+    <p class="hero-jp">一瞬が、一生の物語に。</p>
+    <div class="hero-btns">
+      <a href="#plans" class="pill">Plan</a>
+      <a href="https://www.instagram.com/shotory.photostudio?xtok=MXRmaDk2eWM0dmIzNg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener" class="pill"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>Instagram</a>
+    </div>
+  </div>
+</section>
+
+<section id="concept">
+  <div class="wrap concept-grid">
+    <div class="concept-media reveal"><img src="https://images-1-amber.vercel.app/images/concept.jpg" alt="shotoryの撮影風景" loading="lazy"></div>
+    <div class="concept-text reveal">
+      <p class="eyebrow">Natural, As You Are</p>
+      <h2 class="section-title">飾らない、<br>その人らしさを。</h2>
+      <p>きれいに並んだ写真だけではなく、笑った瞬間、手をつないだ時間、少し照れた表情まで。</p>
+      <p>shotoryは、家族や子ども、夫婦、ペットとの日常を、やさしく物語のように残すフォトスタジオです。</p>
+    </div>
+  </div>
+</section>
+
+<section class="scenes" id="scenes">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Scenes</p>
+      <h2 class="section-title">こんな撮影におすすめ</h2>
+      <p class="section-sub">人生のさまざまな瞬間に、そっと寄り添う撮影を。</p>
+    </div>
+    <div class="scene-grid">
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-family.jpg" alt="家族写真" loading="lazy"><span>家族写真</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-half-birthday.jpg" alt="ハーフバースデー" loading="lazy"><span>ハーフ<br>バースデー</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-birthday.jpg" alt="1歳バースデー" loading="lazy"><span>1歳<br>バースデー</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-753.jpg" alt="七五三" loading="lazy"><span>七五三</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-couple.jpg" alt="夫婦写真" loading="lazy"><span>夫婦写真</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-maternity.jpg" alt="マタニティ" loading="lazy"><span>マタニティ</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-pet.jpg" alt="ペットとの撮影" loading="lazy"><span>ペットとの<br>撮影</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-profile.jpg" alt="プロフィール写真" loading="lazy"><span>プロフィール<br>写真</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-home.jpg" alt="おうちフォト" loading="lazy"><span>おうちフォト</span></div>
+      <div class="scene reveal"><img src="https://images-1-amber.vercel.app/images/genre-location.jpg" alt="ロケーションフォト" loading="lazy"><span>ロケーション<br>フォト</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Plan</p>
+      <h2 class="section-title">撮影プラン</h2>
+      <p class="section-sub">気軽な一枚から、じっくり残す一日まで。</p>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-card reveal">
+        <p class="plan-name">Mini Photo</p>
+        <p class="plan-price">¥5,000 <small>（税込）</small></p>
+        <p class="plan-meta">10分 / 10カット</p>
+        <p class="plan-desc">ちょっとだけ写真を残したい日に。お子さまの成長記録や、気軽な記念写真におすすめです。</p>
+      </div>
+      <div class="plan-card featured reveal">
+        <p class="plan-name">Standard Photo</p>
+        <p class="plan-price">¥25,000 <small>（税込）</small></p>
+        <p class="plan-meta">50〜60分 / 80カット前後</p>
+        <p class="plan-desc">家族写真や記念日撮影におすすめの基本プラン。スタジオでゆっくり自然な表情を残します。</p>
+      </div>
+      <div class="plan-card reveal">
+        <p class="plan-name">Home Photo</p>
+        <p class="plan-price">¥28,000 <small>（税込）</small></p>
+        <p class="plan-meta">横浜エリア出張</p>
+        <p class="plan-desc">ご自宅で過ごす、いつもの家族の時間をそのまま写真に。小さなお子さまや、外出が大変なご家族にもおすすめです。</p>
+      </div>
+      <div class="plan-card reveal">
+        <p class="plan-name">Location Photo</p>
+        <p class="plan-price">¥35,000〜 <small>（税込）</small></p>
+        <p class="plan-meta">90分 / 100カット前後</p>
+        <p class="plan-desc">公園、海、街など、お好きな場所で撮影。家族写真、カップル、ウェディング前撮りにも対応可能です。</p>
+      </div>
+    </div>
+    <p class="plan-notes reveal">※料金や内容は撮影内容により変動する場合があります。<br>※ウェディング撮影は別途ご相談ください。<br>※ヘアメイク・レンタル衣装のご用意はございません。あらかじめご準備の上ご来店ください。</p>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Features</p>
+      <h2 class="section-title" style="margin-bottom:40px;">shotoryの特徴</h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal"><b>01</b>自然光を活かした<br>やわらかい写真</div>
+      <div class="feature reveal"><b>02</b>お子さまやペットも<br>リラックスしやすい空間</div>
+      <div class="feature reveal"><b>03</b>作り込みすぎない、<br>自然な雰囲気</div>
+      <div class="feature reveal"><b>04</b>スタジオ撮影も<br>出張撮影も対応</div>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Flow</p>
+      <h2 class="section-title" style="margin-bottom:40px;">撮影の流れ</h2>
+    </div>
+    <div class="flow reveal">
+      <div class="flow-step"><span class="flow-num">01</span><div><h3>お問い合わせ・ご予約</h3><p>LINEまたはInstagramのDMよりご連絡ください。</p></div></div>
+      <div class="flow-step"><span class="flow-num">02</span><div><h3>撮影内容のご相談</h3><p>プランや日時、ご希望の雰囲気をすり合わせます。</p></div></div>
+      <div class="flow-step"><span class="flow-num">03</span><div><h3>撮影当日</h3><p>スタジオまたはご希望の場所で、自然体の撮影を。</p></div></div>
+      <div class="flow-step"><span class="flow-num">04</span><div><h3>写真データ納品</h3><p>選定・調整のうえ、オンラインでお渡しします。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="section-title" style="margin-bottom:40px;">よくある質問</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details><summary>子どもが人見知りでも大丈夫ですか？</summary><p>無理にポーズを作らず、お子さまのペースに合わせて撮影します。</p></details>
+      <details><summary>ペットと一緒に撮影できますか？</summary><p>はい、ペットとの撮影も可能です。事前にご相談ください。</p></details>
+      <details><summary>服装はどうしたらいいですか？</summary><p>白・ベージュ・ブラウンなど、やさしい色味のお洋服がおすすめです。</p></details>
+      <details><summary>ヘアメイクや衣装は自分で用意してもいいですか？</summary><p>shotoryではヘアメイク・レンタル衣装のご用意はございませんので、ヘアメイク・衣装は事前にご自身でご準備ください。撮影で使いたい小道具の持ち込みも可能ですので、お気軽にご相談ください。</p></details>
+      <details><summary>ロケーション撮影はできますか？</summary><p>はい、公園や海、ご自宅などでの撮影も可能です。</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="wrap reveal">
+    <p class="eyebrow">Reservation</p>
+    <h2 class="reserve-title">今しかない時間を、<br>写真に残しませんか。</h2>
+    <p class="reserve-text">家族の記念日も、何気ない日常も。<br>あとから見返した時に、あたたかい気持ちになれる写真を。</p>
+    <div class="reserve-btns">
+      <a href="https://lin.ee/YKAl7Uc" target="_blank" rel="noopener" class="r-btn primary">撮影を予約する</a>
+      <a href="https://lin.ee/YKAl7Uc" target="_blank" rel="noopener" class="r-btn">LINEで相談する</a>
+      <a href="https://www.instagram.com/shotory.photostudio?xtok=MXRmaDk2eWM0dmIzNg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener" class="r-btn"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>Instagramで作例を見る</a>
+    </div>
+  </div>
+</section>
+
+<footer id="access">
+  <div class="wrap">
+    <p class="f-logo">shotory</p>
+    <p class="f-sub">Photo Studio</p>
+    <p>神奈川県横浜市戸塚区平戸3-37-13</p>
+    <p>金・土・日 12:30–19:00（平日も対応可能な日あり）</p>
+    <div class="f-links">
+      <a href="https://maps.app.goo.gl/TodrmQYvHWeFu5Da9?g_st=ic" target="_blank" rel="noopener">Google Map</a>
+      <a href="https://www.instagram.com/shotory.photostudio?xtok=MXRmaDk2eWM0dmIzNg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+      <a href="/">shotory TOP</a>
+    </div>
+    <p class="f-copy">© 2026 shotory photo studio</p>
+  </div>
+</footer>
+
+<div class="sticky-cta" id="stickyCta">
+  <a href="#access" class="cta-access"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.58 7-13a7 7 0 1 0-14 0c0 5.42 7 13 7 13Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>Access</a>
+  <a href="https://lin.ee/YKAl7Uc" target="_blank" rel="noopener" class="cta-book"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 9.5h18M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>ご予約・お問い合わせ</a>
+</div>
+
+<a href="https://www.instagram.com/shotory.photostudio?xtok=MXRmaDk2eWM0dmIzNg%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener" class="fab-ig" id="fabIg" aria-label="Instagram">
+  <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="#2A2015" stroke-width="1.6"/><circle cx="12" cy="12" r="5" stroke="#2A2015" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.2" fill="#2A2015"/></svg>
+</a>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+    var hideEls=[document.getElementById('stickyCta'),document.getElementById('fabIg')];
+    var ro=new IntersectionObserver(function(es){ es.forEach(function(e){ hideEls.forEach(function(h){ h.classList.toggle('hide', e.isIntersecting); }); }); },{threshold:0.2});
+    ro.observe(document.getElementById('reserve'));
+  } else { els.forEach(function(el){ el.classList.add('in'); }); }
+})();
+</script>
+</body>
+</html>
