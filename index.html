@@ -388,39 +388,41 @@
   .pc-only{ display:none; }
 
   /* mobile positions */
-  .pick-stage{ aspect-ratio:1/1.12; margin:28px -8px 0; }
+  .pick-stage{ aspect-ratio:1/1.45; margin:28px -8px 0; }
   .p-coffee  { --x:0%;   --y:1%;  --w:34%; --z:7; --r:-4deg; }
-  .p-iced    { --x:70%;  --y:-3%; --w:30%; --z:7; --r:3deg; }
-  .p-sugar   { --x:21%;  --y:12%; --w:58%; --z:6; --r:-6deg; }
-  .p-bacon   { --x:-2%;  --y:51%; --w:47%; --z:4; --r:8deg; }
-  .p-anbutter{ --x:55%;  --y:52%; --w:47%; --z:4; --r:-9deg; }
-  .p-pudding { --x:33%;  --y:72%; --w:34%; --z:3; }
+  .p-iced    { --x:70%;  --y:-1%; --w:30%; --z:7; --r:3deg; }
+  .p-sugar   { --x:21%;  --y:9%;  --w:58%; --z:6; --r:-6deg; }
+  .p-cinnamon{ --x:-2%;  --y:41%; --w:47%; --z:4; --r:8deg; }
+  .p-anbutter{ --x:55%;  --y:42%; --w:47%; --z:4; --r:-9deg; }
+  .p-pudding { --x:33%;  --y:62%; --w:34%; --z:5; }
+  .p-mocha   { --x:3%;   --y:75%; --w:31%; --z:3; --r:-6deg; }
+  .p-scone   { --x:66%;  --y:76%; --w:31%; --z:3; --r:6deg; }
   .pick-tag{ font-size:0.62rem; padding:3px 10px; gap:5px; bottom:4%; }
   .pick-tag span{ font-size:0.74rem; }
   .p-coffee .pick-tag{ left:58%; bottom:10%; }
   .p-iced .pick-tag{ left:46%; bottom:4%; }
   .p-sugar .pick-tag{ bottom:6%; }
-  .p-bacon .pick-tag{ left:46%; bottom:8%; }
-  .p-anbutter .pick-tag{ left:54%; bottom:8%; }
-  .p-pudding .pick-tag{ bottom:-6%; }
+  .p-cinnamon .pick-tag{ left:40%; bottom:8%; }
+  .p-anbutter .pick-tag{ left:60%; bottom:8%; }
+  .p-pudding .pick-tag{ bottom:-4%; }
+  .p-mocha .pick-tag, .p-scone .pick-tag{ bottom:0%; }
 
   @media(min-width:860px){
     section.cafe-pick{ padding:112px 0 120px; }
     .pick-stage{ margin:32px auto 0; max-width:1100px; aspect-ratio:16/9; }
-    .pick-tag, .p-coffee .pick-tag, .p-iced .pick-tag, .p-sugar .pick-tag, .p-bacon .pick-tag, .p-anbutter .pick-tag{ left:50%; bottom:4%; }
+    .pick-tag, .p-coffee .pick-tag, .p-iced .pick-tag, .p-sugar .pick-tag, .p-cinnamon .pick-tag, .p-anbutter .pick-tag, .p-mocha .pick-tag, .p-scone .pick-tag{ left:50%; bottom:4%; }
     .p-pudding .pick-tag{ bottom:-2%; }
     .pc-only{ display:block; }
     .pick-tag{ font-size:0.78rem; padding:5px 14px; }
-    .p-coffee  { --x:3%;   --y:4%;  --w:17%; --z:5; }
+    .p-coffee  { --x:3%;   --y:4%;  --w:17%; --z:5; --r:0deg; }
     .p-mocha   { --x:19%;  --y:-2%; --w:14%; --z:2; --r:8deg; }
-    .p-cinnamon{ --x:69%;  --y:-2%; --w:22%; --z:2; --r:14deg; }
-    .p-iced    { --x:88%;  --y:30%; --w:15%; --z:5; }
-    .p-sugar   { --x:35%;  --y:8%;  --w:31%; --z:3; }
-    .p-bacon   { --x:13%;  --y:34%; --w:27%; --z:4; --r:8deg; }
-    .p-anbutter{ --x:61%;  --y:38%; --w:26%; --z:4; --r:-10deg; }
+    .p-sugar   { --x:35%;  --y:6%;  --w:31%; --z:3; --r:0deg; }
+    .p-cinnamon{ --x:13%;  --y:34%; --w:27%; --z:4; --r:8deg; }
+    .p-anbutter{ --x:61%;  --y:36%; --w:26%; --z:4; --r:-10deg; }
+    .p-iced    { --x:70%;  --y:0%;  --w:15%; --z:5; --r:3deg; }
     .p-cheese  { --x:-1%;  --y:66%; --w:17%; --z:5; --r:-4deg; }
     .p-pudding { --x:40%;  --y:66%; --w:18%; --z:6; }
-    .p-scone   { --x:84%;  --y:70%; --w:14%; --z:5; --r:6deg; }
+    .p-scone   { --x:84%;  --y:56%; --w:15%; --z:5; --r:6deg; }
   }
 
   .pick-morning{
@@ -1197,15 +1199,14 @@
     </div>
     <div class="pick-stage reveal">
       <figure class="pick-item p-coffee" style="--d:0.00s"><img src="/cafe-coffee.webp" alt="ハンドドリップコーヒー" loading="lazy"><figcaption class="pick-tag"><b>ハンドドリップ</b><span>¥500</span></figcaption></figure>
-      <figure class="pick-item p-mocha pc-only" style="--d:0.08s"><img src="/cafe-mocha.webp" alt="カフェモカ" loading="lazy"><figcaption class="pick-tag"><b>カフェモカ</b><span>¥600</span></figcaption></figure>
-      <figure class="pick-item p-cinnamon pc-only" style="--d:0.16s"><img src="/toast-cinnamon.webp" alt="シナモンシュガートースト" loading="lazy"></figure>
-      <figure class="pick-item p-iced" style="--d:0.24s"><img src="/cafe-iced.webp" alt="アイスラテとアイスコーヒー" loading="lazy"><figcaption class="pick-tag"><b>テイクアウトOK</b></figcaption></figure>
-      <figure class="pick-item p-sugar" style="--d:0.32s"><img src="/toast-sugar.webp" alt="シュガーバタートースト" loading="lazy"><figcaption class="pick-tag"><em>人気No.1</em><b>シュガーバター</b><span>¥400</span></figcaption></figure>
-      <figure class="pick-item p-bacon" style="--d:0.40s"><img src="/toast-bacon.webp" alt="ベーコンチーズトースト" loading="lazy"><figcaption class="pick-tag"><b>ベーコンチーズ</b><span>¥550</span></figcaption></figure>
-      <figure class="pick-item p-anbutter" style="--d:0.48s"><img src="/toast-anbutter.webp" alt="あんバタートースト" loading="lazy"><figcaption class="pick-tag"><b>あんバター</b><span>¥500</span></figcaption></figure>
-      <figure class="pick-item p-cheese pc-only" style="--d:0.56s"><img src="/sweets-cheesecake.webp" alt="NYチーズケーキ" loading="lazy"></figure>
-      <figure class="pick-item p-pudding" style="--d:0.64s"><img src="/sweets-pudding.webp" alt="こくまろプリン" loading="lazy"><figcaption class="pick-tag"><b>こくまろプリン</b><span>¥450</span></figcaption></figure>
-      <figure class="pick-item p-scone pc-only" style="--d:0.72s"><img src="/sweets-scone.webp" alt="スコーン" loading="lazy"></figure>
+      <figure class="pick-item p-iced" style="--d:0.08s"><img src="/cafe-iced.webp" alt="アイスラテとアイスコーヒー" loading="lazy"><figcaption class="pick-tag"><b>テイクアウトOK</b></figcaption></figure>
+      <figure class="pick-item p-sugar" style="--d:0.16s"><img src="/toast-sugar.webp" alt="シュガーバタートースト" loading="lazy"><figcaption class="pick-tag"><em>人気No.1</em><b>シュガーバター</b><span>¥400</span></figcaption></figure>
+      <figure class="pick-item p-cinnamon" style="--d:0.24s"><img src="/toast-cinnamon.webp" alt="シナモンシュガートースト" loading="lazy"><figcaption class="pick-tag"><b>シナモンシュガー</b><span>¥450</span></figcaption></figure>
+      <figure class="pick-item p-anbutter" style="--d:0.32s"><img src="/toast-anbutter.webp" alt="あんバタートースト" loading="lazy"><figcaption class="pick-tag"><b>あんバター</b><span>¥500</span></figcaption></figure>
+      <figure class="pick-item p-pudding" style="--d:0.40s"><img src="/sweets-pudding.webp" alt="こくまろプリン" loading="lazy"><figcaption class="pick-tag"><b>こくまろプリン</b><span>¥450</span></figcaption></figure>
+      <figure class="pick-item p-mocha" style="--d:0.48s"><img src="/cafe-mocha.webp" alt="カフェモカ" loading="lazy"><figcaption class="pick-tag"><b>カフェモカ</b><span>¥600</span></figcaption></figure>
+      <figure class="pick-item p-scone" style="--d:0.56s"><img src="/sweets-scone.webp" alt="スコーン" loading="lazy"><figcaption class="pick-tag"><b>スコーン</b><span>¥250</span></figcaption></figure>
+      <figure class="pick-item p-cheese pc-only" style="--d:0.64s"><img src="/sweets-cheesecake.webp" alt="NYチーズケーキ" loading="lazy"></figure>
     </div>
     <div class="pick-morning reveal">
       <div class="pm-visual"><img src="/morning-set.webp" alt="モーニングセット（ベーコンチーズトースト・サラダ・アイスコーヒー）" loading="lazy"></div>
