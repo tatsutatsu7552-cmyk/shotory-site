@@ -417,6 +417,34 @@
     .p-scone   { --x:84%;  --y:70%; --w:14%; --z:5; --r:6deg; }
   }
 
+  .pick-morning{
+    display:grid; grid-template-columns:1fr; gap:6px; align-items:center;
+    margin:36px auto 0; max-width:1000px;
+  }
+  .pm-visual{ margin:0 -10px; }
+  .pm-visual img{
+    width:100%; height:auto; display:block; transform:rotate(-3deg);
+    filter:drop-shadow(0 22px 24px rgba(42,32,21,0.26)) drop-shadow(0 4px 8px rgba(42,32,21,0.12));
+  }
+  .pm-text{ text-align:center; }
+  .pm-label{
+    display:inline-block; margin:0 0 10px; font-size:0.72rem; letter-spacing:0.12em;
+    background:var(--green-deep); color:var(--white-warm); padding:3px 14px; border-radius:999px;
+  }
+  .pm-title{
+    font-family:var(--serif-jp); font-weight:500; font-size:1.5rem; letter-spacing:0.1em;
+    color:var(--brown-deep); margin:0 0 10px;
+  }
+  .pm-desc{ font-size:0.88rem; color:var(--brown-soft); line-height:2; margin:0 0 8px; }
+  .pm-price{ font-family:var(--serif-en); font-size:2.4rem; color:var(--brown-deep); margin:0; line-height:1.2; }
+  .pm-price small{ font-family:var(--sans-jp); font-size:0.78rem; color:var(--green-deep); margin-right:10px; vertical-align:middle; }
+  .pm-price span{ font-size:1.1rem; margin-left:2px; }
+  @media(min-width:860px){
+    .pick-morning{ grid-template-columns:1.25fr 0.75fr; gap:40px; margin-top:48px; }
+    .pm-visual{ margin:0; }
+    .pm-text{ text-align:left; }
+  }
+
   .pick-chips{
     display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:28px;
   }
@@ -1175,8 +1203,17 @@
       <figure class="pick-item p-pudding" style="--d:0.64s"><img src="/sweets-pudding.webp" alt="こくまろプリン" loading="lazy"><figcaption class="pick-tag"><b>こくまろプリン</b><span>¥450</span></figcaption></figure>
       <figure class="pick-item p-scone pc-only" style="--d:0.72s"><img src="/sweets-scone.webp" alt="スコーン" loading="lazy"></figure>
     </div>
+    <div class="pick-morning reveal">
+      <div class="pm-visual"><img src="/morning-set.webp" alt="モーニングセット（ベーコンチーズトースト・サラダ・アイスコーヒー）" loading="lazy"></div>
+      <div class="pm-text">
+        <p class="pm-label">いちばん人気</p>
+        <h3 class="pm-title">モーニングセット</h3>
+        <p class="pm-desc">厚切りトースト＋えらべるサイド＋ドリンク。<br>朝の時間だけの、うれしい価格です。</p>
+        <p class="pm-price"><small>〜11:30</small>¥650<span>〜</span></p>
+      </div>
+    </div>
     <div class="pick-chips reveal">
-      <span>Morning 〜11:30</span><span>テイクアウトOK</span><span>1階・テラス わんちゃんOK</span>
+      <span>ハンドドリップ</span><span>テイクアウトOK</span><span>1階・テラス わんちゃんOK</span>
     </div>
     <div class="pick-cta reveal">
       <a href="#menu" class="founder-cta">メニューを見る</a>
